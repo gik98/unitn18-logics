@@ -1,0 +1,74 @@
+\chapter{PL - Introduzione}
+La logica delle proposizioni (Propositional Logics -\textbf{PL}) si compone di \textbf{simboli logici} e \textbf{variabili proposizionali}. Una proposizione (formula) è composta quindi di variabili proposizionali uniti da simboli logici. La formula può essere \textit{vera} o \textit{falsa} a seconda dell'assegnazione delle singole variabili.
+
+\begin{fdefinition}[Linguaggio della PL]
+\textbf{Logical symbols:}
+\begin{enumerate*}[label=(\arabic*)]
+\item $\lnot$
+\item $\land$
+\item $\lor$
+\item $\supset$
+\item $\equiv$
+\end{enumerate*}
+\\
+\textbf{PL formulas and sub-formulas}
+\begin{itemize}
+\item every logical variable $P \in \mathrm{P}$ is an atomic formula
+\item every atomic formula is a formula
+\item if A and B are formulas, then $\lnot A, A \land B, A \lor B, A \supset B, A \equiv B$ are formulas
+\end{itemize}
+\end{fdefinition}
+
+Una \textbf{funzione di interpretazione} $I: \mathit{P} \to \lbrace \top, \bot \rbrace$ assegna un valore vero o falso a ciascuna variabile $P \in \mathrm{P}$.
+
+Una funzione di interpretazione è detta \textbf{modello} di una funzione $\varphi$ se le sue assegnazioni rendono il valore della funzione vero. In simboli: $I \models \varphi$.
+
+\subsection{SAT, UNSAT, VAL}
+
+\begin{itemize}
+\item Una formula $\mathrm{A}$ è soddisfacibile (\textbf{SAT}) se $\exists I$ funzione di interpretazione t.c. $I \models \mathrm{A}$.
+
+\item Una formula $\mathrm{A}$ è insoddisfacibile (\textbf{SAT}) se $\nexists I$ funzione di interpretazione t.c. $I \models \mathrm{A}$.
+
+\item Una formula $\mathrm{A}$ è valida (\textbf{VALID}) se $\forall I, I \models \mathrm{A}$
+\end{itemize}
+
+\textbf{Osservazione:}
+
+Se $\mathrm{A}$ è \textbf{VALID}, $\lnot \mathrm{A}$ è \textbf{UNSAT}.
+
+Se $\mathrm{A}$ è \textbf{SAT}, $\lnot \mathrm{A}$ non è valida.
+
+Se $\mathrm{A}$ non è valida, $\lnot \mathrm{A}$ è \textbf{SAT}.
+
+Se $\mathrm{A}$ è \textbf{UNSAT}, $\lnot \mathrm{A}$ è \textbf{VALID}. 
+
+
+\subsection{Conseguenza e equivalenza logica}
+\begin{itemize}
+\item Una formula $\mathrm{A}$ è una \textbf{conseguenza logica} di un insieme di formule $\Gamma$, in simboli $\Gamma \models \mathrm{A}$ sse per ogni funzione di interpretazione $I$ che soddisfa tutte le formule di $\Gamma$, $I$ soddisfa $\mathrm{A}$.
+
+\item Due formule $\mathrm{A}, \mathrm{B}$ sono \textbf{equivalenti}, in simboli $\mathrm{A} \equiv \mathrm{B}$ sse per ogni funzione di interpretazione $I$, $I(\mathrm{A}) = I(\mathrm{B})$. 
+\end{itemize}
+
+\subsection{Procedure di decisione}
+
+\textbf{Model checking ($I$, $\varphi$)}: $I \stackrel{?}{\models} \varphi$ ($I$ soddisfa $\varphi$?)
+
+\textbf{Satisfiability ($\varphi$)}: $\stackrel{?}{\exists} I | I \models \varphi$ (Esiste un modello che soddisfi $\varphi$?)
+
+\textbf{Validity ($\varphi$)}: $\stackrel{?}{\models} \varphi$ ($\varphi$ è soddisfatta da qualsiasi modello?)
+
+\textbf{Logical consequence ($\Gamma$, $\varphi$)}: $\Gamma \stackrel{?}{\models} \varphi$ (Ogni modello che soddisfa $\Gamma$ soddisfa anche $\varphi$?)
+
+\subsection{Formalizzazione del linguaggio naturale}
+
+\begin{itemize}
+\item $A$: "It is the case that A"
+\item $\lnot A$: "It is not the case that A"
+\item $A \land B$: "A and B", "A but B", "Although A, B", "Both A and B"
+\item $A \lor B$: "A or B", "Either A or B"
+\item $A \to B$: "If A, then B", "B if A"
+\item $\lnot (A \lor B)$: "Neither A nor B"
+\item $\lnot (A \land B)$: "It is not the case that both A and B"
+\end{itemize}

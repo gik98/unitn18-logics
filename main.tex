@@ -1,0 +1,45 @@
+\documentclass[11pt,a4,openany]{memoir}
+\usepackage{mdframed}
+\usepackage{ntheorem}
+\usepackage{lipsum}
+\usepackage[inline]{enumitem}
+\usepackage{amssymb}
+\usepackage{indentfirst}
+
+\theoremstyle{break}\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+
+\theoremstyle{break}
+\newtheorem{definition}{Definizione}
+\newenvironment{fdefinition}
+  {\begin{mdframed}\begin{definition}}
+  {\end{definition}\end{mdframed}}
+\chapterstyle{dash}
+
+\setlist[itemize]{noitemsep, topsep=0pt}
+
+
+\begin{document}
+
+\begin{titlingpage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	
+	\raggedleft % Right align the title page
+	
+	\rule{1pt}{\textheight} % Vertical line
+	\hspace{0.05\textwidth} % Whitespace between the vertical line and title page text
+	\parbox[b]{0.75\textwidth}{ 
+		{\Huge\bfseries Appunti di Logica}\\[4\baselineskip]
+		{\large\textit{Sul corso di Logica Matematica del Prof. Giunchiglia, Università degli Studi di Trento}}\\\\
+		{\textsc{A.A. 2018/2019}\\[3\baselineskip]
+		\textit{Giacomo Fabris}}
+		
+		\vspace{0.5\textheight} % Whitespace between the title block and the publisher
+		
+	}
+
+\end{titlingpage}
+
+\include{pl-intro}
+\include{pl-cnf-dpll}
+\include{pl-tableaux}
+\end{document}

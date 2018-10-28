@@ -1,0 +1,64 @@
+\chapter{PL - Tableaux}
+
+\begin{tabular*}{\textwidth}{c @{\extracolsep{\fill}} c}
+$\alpha$ rules & $\lnot \lnot$ elimination \\
+\\
+%alpha rules
+\begin{tabular}{c c c}
+\begin{tabular}{c}
+$\phi \land \psi$ \\
+\hline
+$\phi$ \\
+$\psi$ \\
+\end{tabular} &
+\begin{tabular}{c}
+$\phi \lor \psi$ \\
+\hline
+$\lnot \phi$ \\
+$\lnot \psi$ \\
+\end{tabular} &
+\begin{tabular}{c}
+$\lnot (\phi \supset \psi)$ \\
+\hline
+$\phi$ \\
+$\lnot \psi$ \\
+\end{tabular}
+\end{tabular} &
+%lnot lnot elimination
+\begin{tabular}{c}
+$\lnot \lnot \phi$ \\
+\hline
+$\phi$
+\end{tabular}\\
+\\
+$\beta$ rules & Branch closure \\
+%beta rules
+\begin{tabular}{c c c}
+\begin{tabular}{c}
+$\phi \lor \psi$ \\
+\hline
+$\phi$ \vline \hspace{1mm} $\psi$ 
+\end{tabular} &
+\begin{tabular}{c}
+$\lnot (\phi \land \psi)$ \\
+\hline
+$\lnot \phi$ \vline \hspace{1mm} $\lnot \psi$ 
+\end{tabular} &
+\begin{tabular}{c}
+$\phi \supset \psi$ \\
+\hline
+$\lnot \phi$ \vline \hspace{1mm} $\psi$ 
+\end{tabular}
+\end{tabular} &
+%branch closure
+\begin{tabular}{c}
+$\phi$\\
+$\lnot\phi$\\
+\hline
+$\mathrm{X}$
+\end{tabular}\\
+\end{tabular*}
+
+L'equivalenza può essere riscritta come doppia implicazione.
+
+$$\phi \equiv \psi \iff (\phi \supset \psi) \land (\psi \supset \phi)$$
