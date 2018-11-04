@@ -57,7 +57,7 @@ In PL, un'interpretazione consiste nell'associazione di variabili proposizionali
 \end{itemize}
 \end{enumerate}
 
-\textbf{Osservazione} (Relazioni e funzioni): esattamente come definite in algebra, le funzioni sono una specializzazione delle relazioni. In altre parole, ogni funzione di arità $n$ può essere equivalentemente rappresentata come una relazione di arità $n+1$. Esempio: $Mary$ è madre di $Joe$, $Jill$ e $Bill$. È possibile definire:
+\textbf{Osservazione} (Relazioni e funzioni): esattamente come definite in algebra, le funzioni possono essere viste come una specializzazione delle relazioni. In altre parole, ogni funzione di arità $n$ può essere equivalentemente rappresentata come una relazione di arità $n+1$. Esempio: $Mary$ è madre di $Joe$, $Jill$ e $Bill$. È possibile definire:
 \begin{itemize}
 \item $motherOf$ come una relazione di $\Delta^2$: $$motherOf \coloneqq \lbrace \langle Joe, Mary \rangle, \langle Jill, Mary \rangle, \langle Bill, Mary \rangle \rbrace$$
 \item $motherOf$ come una funzione $\Delta \to \Delta$: $$motherOf(Joe) = Mary, motherOf(Jill) = Mary, motherOf(Bill) = Mary$$
@@ -123,6 +123,28 @@ Una formula $\varphi$ è \textbf{insoddisfacibile} se non è soddisfacibile.
 Una formula $\varphi$ è \textbf{valida} se per ogni \textit{interpretazione} $I$ e per ogni \textit{assignment} $a$ vale $I \models \varphi[a]$.
 
 \textbf{Osservazione}: Se una formula è \textbf{chiusa}, la sua validità o (in)soddisfacibilità non dipende dall'assegnazione $a$ (l'assegnazione non ha alcun effetto sulla formula perché la formula non ha variabili libere sulle quali effettuare l'assegnazione).
+
+\subsection{Analogia con i DB}
+Un database relazionale può essere rappresentato in First-Order Logic; l'equivalenza è così descritta:
+\begin{itemize}
+\item le \textbf{relazioni} in FOL corrispondono alle \textbf{tabelle} del database;
+\item il dominio di interpretazione $\Delta$ in FOL corrisponde all'insieme di tutti i valori che compaiono nei dati contenuti nelle tabelle;
+\item la funzione di interpretazione $I$ in FOL corrisponde alle tuple contenute nelle tabelle;
+\item formule FOL corrispono a query del DB; le interpretazioni che rendono la formula vera corrispondono alla risposta alla query.
+\end{itemize}
+
+\textbf{Esempio:}
+Si consideri il database composto dalla tabella $$Employee(ename, dep, manager, age)$$
+
+\begin{itemize}
+\item Elencare tutti i dipartimenti nei quali $Joe$ lavora per $Jill$:
+$$\exists y. Employee(Joe, x, Jill, y)$$
+\textit{Spiegazione}: Employee è una relazione FOL; Joe, Jill sono costanti del dominio di interpretazione; $x$ è variabile libera, $y$ è bound dal quantificatore esistenziale. Sono modello della query tutte le interpretazioni che assegnano $ename = Joe$, un qualunque valore di dep e age, $manager = Jill$. Sono resituite le assegnazioni delle variabili libere (dunque il quantificatore esistenziale può essere usato come operatore di proiezione; le variabili che sono legate al quantificatore non sono restituite).
+\item Elencare i nomi e i dipartimenti di tutti i lavoratori che hanno età uguale a 40 anni.
+$$\exists m, a. Employee(x, y, m, a) \land a = 40$$
+\item Elencare i dati di tutti gli impiegati che sono manager di loro stessi (wat?):
+$$Employee(x, y, x, z)$$
+\end{itemize}
 
 \subsection{Unique Name Assumption}
 
