@@ -1,1 +1,107 @@
 \chapter{FOL - Tableaux}
+
+Il tableaux in FOL funziona in modo simile a quello della PL, introduce due nuove regole di riduzione legate ai quantificatori e, a differenza della PL, può non terminare.
+
+\subsection{Regole di riduzione}
+
+\begin{tabular*}{\textwidth}{c @{\extracolsep{\fill}} c}
+$\alpha$ rules & $\lnot \lnot$ elimination \\
+\\
+%alpha rules
+\begin{tabular}{c c c}
+\begin{tabular}{c}
+$\phi \land \psi$ \\
+\hline
+$\phi$ \\
+$\psi$ \\
+\end{tabular} &
+\begin{tabular}{c}
+$\lnot (\phi \lor \psi)$ \\
+\hline
+$\lnot \phi$ \\
+$\lnot \psi$ \\
+\end{tabular} &
+\begin{tabular}{c}
+$\lnot (\phi \supset \psi)$ \\
+\hline
+$\phi$ \\
+$\lnot \psi$ \\
+\end{tabular}
+\end{tabular} &
+%lnot lnot elimination
+\begin{tabular}{c}
+$\lnot \lnot \phi$ \\
+\hline
+$\phi$
+\end{tabular}\\
+\\
+$\beta$ rules & Branch closure \\
+%beta rules
+\begin{tabular}{c c c}
+\begin{tabular}{c}
+$\phi \lor \psi$ \\
+\hline
+$\phi$ \vline \hspace{1mm} $\psi$ 
+\end{tabular} &
+\begin{tabular}{c}
+$\lnot (\phi \land \psi)$ \\
+\hline
+$\lnot \phi$ \vline \hspace{1mm} $\lnot \psi$ 
+\end{tabular} &
+\begin{tabular}{c}
+$\phi \supset \psi$ \\
+\hline
+$\lnot \phi$ \vline \hspace{1mm} $\psi$ 
+\end{tabular}
+\end{tabular} &
+%branch closure
+\begin{tabular}{c}
+$\phi$\\
+$\lnot\phi$\\
+\hline
+$\mathrm{X}$
+\end{tabular}\\
+\\
+$\gamma$ rules & $\delta$ rules\\
+\begin{tabular}{c c}
+%gamma rules
+\begin{tabular}{c}
+$\forall x . \varphi(x)$ \\
+\hline
+$\varphi(t)$
+\end{tabular} &
+\begin{tabular}{c}
+$\lnot \exists x . \varphi(x)$ \\
+\hline
+$\lnot \varphi(t)$
+\end{tabular}
+\end{tabular} &
+\begin{tabular}{c c}
+%delta rules
+\begin{tabular}{c}
+$\lnot \forall x . \varphi(x)$ \\
+\hline
+$\lnot \varphi(c)$
+\end{tabular} &
+\begin{tabular}{c}
+$\exists x . \varphi(x)$ \\
+\hline
+$\varphi(c)$
+\end{tabular}
+\end{tabular}\\
+\\
+\end{tabular*}
+
+\begin{enumerate}
+\item Nelle $\gamma$ rules, $t$ rappresenta una \textit{variabile libera} già presente nella formula.
+\item Nelle $\gamma$ rules, $c$ rappresenta una \textit{nuova costante}, non presente nella formula.
+\end{enumerate}
+
+Perché funziona? Spiegazione:
+\begin{enumerate}
+\item $\forall x . \varphi(x)$ significa che $\varphi$ deve essere soddisfatta per ogni elemento del dominio di interpretazione $\Delta$. Un \textit{term} $t$ sarà valutato in un elemento del dominio $\Delta$. Pertanto, $\forall x. \varphi(x) \supset \varphi[x/t]$.
+\item $\exists x. \varphi(x)$ è equivalente a $\exists c \in \Delta | \varphi(c)$, dunque $\exists x. \varphi(x)$ è soddisfacibile sse $\varphi(c)$ è soddisfacibile.
+\end{enumerate}
+
+\noindent\hrulefill
+\vspace{1em}
