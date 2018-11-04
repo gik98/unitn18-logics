@@ -1,4 +1,6 @@
-\documentclass[11pt,a4,openany]{memoir}
+%Author: Giacomo Fabris
+
+\documentclass[11pt,a4paper,openany]{memoir}
 \usepackage{mdframed}
 \usepackage{ntheorem}
 \usepackage{lipsum}
@@ -7,6 +9,7 @@
 \usepackage{indentfirst}
 \usepackage{calrsfs}
 \usepackage[]{algorithm2e}
+\usepackage{mathtools}
 
 \theoremstyle{break}\usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
@@ -33,9 +36,10 @@
 	\hspace{0.05\textwidth} % Whitespace between the vertical line and title page text
 	\parbox[b]{0.75\textwidth}{ 
 		{\Huge\bfseries Appunti di Logica}\\[4\baselineskip]
-		{\large\textit{Sul corso di Logica Matematica del Prof. Giunchiglia, Università degli Studi di Trento}}\\\\
+		{\large\textit{Sul corso di Logica Matematica @ DISI,\\ Università degli Studi di Trento}}\\\\
 		{\textsc{A.A. 2018/2019}\\[3\baselineskip]
-		\textit{Giacomo Fabris}}
+		%\textit{Giacomo Fabris}
+		}
 		
 		\vspace{0.5\textheight} % Whitespace between the title block and the publisher
 		
@@ -46,4 +50,5 @@
 \include{pl-intro}
 \include{pl-cnf-dpll}
 \include{pl-tableaux}
+\include{fol-intro}
 \end{document}

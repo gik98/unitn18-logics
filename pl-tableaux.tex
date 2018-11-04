@@ -1,5 +1,7 @@
 \chapter{PL - Tableaux}
 
+\subsection{Regole di riduzione}
+
 \begin{tabular*}{\textwidth}{c @{\extracolsep{\fill}} c}
 $\alpha$ rules & $\lnot \lnot$ elimination \\
 \\
@@ -62,3 +64,26 @@ $\mathrm{X}$
 L'equivalenza può essere riscritta come doppia implicazione.
 
 $$\phi \equiv \psi \iff (\phi \supset \psi) \land (\psi \supset \phi)$$
+
+\noindent\hrulefill
+\vspace{1em}
+
+\textbf{Osservazione:} le $\alpha$- e $\beta$ rules del tableaux sono analoghe a quelle di riduzione in \textit{CNF}:
+\begin{itemize}
+\item una $\alpha$ rule è equivalente a and logico $\land$ delle formule da ridurre;
+\item una $\beta$ rule è equivalente a or logico (nella forma $\otimes$) fra tutte le formule da ridurre, prese a due a due.
+\end{itemize}
+
+\subsection{Metodo del tableaux}
+Il \textbf{tableaux} è un metodo per provare se un insieme di formule dato è \textbf{insoddisfacibile}. Di conseguenza, è possibile dimostrare anche la \textbf{validità} dell'insieme di formule (dimostrando l'insoddisfacibilità della negazione dell'insieme di formule).
+
+Il \textbf{tableaux} costruisce un albero binario, la cui radice è la congiunzione dell'insieme di formule di cui si vuole verificare l'insoddisfacibilità. Nuove foglie sono aggiunte applicando $\alpha$ rules (\textit{deterministic rules}) o $\beta$ rules (\textit{branch splitting})a una qualsiasi formula che appare in un nodo \textit{ancestor}. 
+
+Un ramo dell'albero è \textbf{chiuso} se il cammino fra la foglia e la radice contiene formule contraddittorie (es. $p$, $\lnot p$). Se tutti i rami possono essere chiusi, allora la formula di partenza è insoddisfacibile.
+
+\textbf{Osservazione:} è conveniente applicare $\alpha$ rules anziché $\beta$ rules, laddove possibile, in modo da non aumentare il numero di rami dell'albero.
+
+\subsection{Interpretazione dal tableaux}
+Si può dimostrare che un tableaux in PL termina sempre (dopo un numero finito di passi tutti i rami sono chiusi oppure tutte le formule che compaiono nel tableaux sono state valutate). Pertanto, se una formula genera un tableaux che non si chiude, la formula è \textbf{soddisfacibile}.
+
+I modelli che rendono il tableaux soddisfacibile possono essere ricavati dai rami rimasti aperti. Per ogni ramo e per ogni variabile proposizionale $p$, vale $I(p) = \top$ se nel cammino dalla foglia alla radice compare $p$; $I(p) = \bot$ se nel cammino dalla foglia alla radice compare $\lnot p$. Se né $p$ né $\lnot p$ compaiono, $I(p)$ può essere definito arbitrariamente (entrambe le definizioni renderanno la formula soddisfacibile).

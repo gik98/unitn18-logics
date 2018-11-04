@@ -32,12 +32,12 @@ Una formula in CNF può essere rappresentata come un insieme di \textit{clauses}
 \vspace{1em}
 \begin{itemize}
 \item $\mathrm{CNF}(\lnot (\phi \to \psi)) = \mathrm{CNF}(\phi) \land\mathrm{CNF}(\lnot \psi)$
-\item $\mathrm{CNF}(\lnot (\phi \land \psi)) = \mathrm{CNF}(\lnot \phi) \oplus \mathrm{CNF}(\lnot \psi)$
+\item $\mathrm{CNF}(\lnot (\phi \land \psi)) = \mathrm{CNF}(\lnot \phi) \otimes \mathrm{CNF}(\lnot \psi)$
 \item $\mathrm{CNF}(\lnot (\phi \lor \psi)) = \mathrm{CNF}(\lnot \phi) \land \mathrm{CNF}(\lnot \psi)$
-\item $\mathrm{CNF}(\lnot (\phi \equiv \psi)) = \mathrm{CNF}(\phi \land \lnot \psi) \oplus \mathrm{CNF}(\psi \land \lnot \phi)$
+\item $\mathrm{CNF}(\lnot (\phi \equiv \psi)) = \mathrm{CNF}(\phi \land \lnot \psi) \otimes \mathrm{CNF}(\psi \land \lnot \phi)$
 \end{itemize}
 
-Dove $\oplus$ è definito come segue: $$(C_1, ..., C_n) \oplus (D_1, ..., D_n) := (C_1 \lor D_1) \land ... \land (C_1 \lor D_n) \land ... \land (C_n \lor D_1) \land ... \land (C_n \lor D_n)$$
+Dove $\otimes$ è definito come segue: $$(C_1, ..., C_n) \otimes (D_1, ..., D_n) := (C_1 \lor D_1) \land ... \land (C_1 \lor D_n) \land ... \land (C_n \lor D_1) \land ... \land (C_n \lor D_n)$$
 
 \subsection{DPLL}
 

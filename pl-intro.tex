@@ -1,5 +1,7 @@
 \chapter{PL - Introduzione}
-La logica delle proposizioni (Propositional Logics -\textbf{PL}) si compone di \textbf{simboli logici} e \textbf{variabili proposizionali}. Una proposizione (formula) è composta quindi di variabili proposizionali uniti da simboli logici. La formula può essere \textit{vera} o \textit{falsa} a seconda dell'assegnazione delle singole variabili.
+La logica delle proposizioni (Propositional Logic -\textbf{PL}) è una logica che permette di rappresentare fatti (affermazioni), che possono essere vere o false.
+
+PL si compone di \textbf{simboli logici} e \textbf{variabili proposizionali}. Una proposizione (formula) è composta quindi di variabili proposizionali uniti da simboli logici. La formula può essere \textit{vera} o \textit{falsa} a seconda dell'assegnazione delle singole variabili.
 
 \begin{fdefinition}[Linguaggio della PL]
 \textbf{Logical symbols:}
@@ -28,7 +30,7 @@ Una funzione di interpretazione è detta \textbf{modello} di una funzione $\varp
 \begin{itemize}
 \item Una formula $\mathrm{A}$ è soddisfacibile (\textbf{SAT}) se $\exists I$ funzione di interpretazione t.c. $I \models \mathrm{A}$.
 
-\item Una formula $\mathrm{A}$ è insoddisfacibile (\textbf{SAT}) se $\nexists I$ funzione di interpretazione t.c. $I \models \mathrm{A}$.
+\item Una formula $\mathrm{A}$ è insoddisfacibile (\textbf{UNSAT}) se $\nexists I$ funzione di interpretazione t.c. $I \models \mathrm{A}$.
 
 \item Una formula $\mathrm{A}$ è valida (\textbf{VALID}) se $\forall I, I \models \mathrm{A}$
 \end{itemize}

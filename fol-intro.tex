@@ -1,0 +1,138 @@
+\chapter{FOL - Introduzione}
+
+La logica del primo ordine (First-Order Logic - \textbf{FOL}) è un'estensione della propositional logic.
+
+Mentre la PL prevede solamente valori di verità o falsità, FOL prevede \textit{variabili} che rappresentano oggetti del mondo da descrivere, inoltre, questi oggetti possono essere quantificati (si possono descrivere \textit{tutti} gli oggetti o \textit{alcuni} oggetti, senza nominare ciascuno esplicitamente, come sarebbe necessario in PL).
+
+\begin{fdefinition}[Sintassi della FOL]
+\textbf{Logical symbols:}
+Comprende gli stessi simboli della PL, e in più:
+\begin{enumerate}
+\item quantificatori ($\forall$, $\exists$)
+\item variabili $x_1, x_2, ...$
+\item simbolo di uguaglianza (opzionale) $=$
+\end{enumerate}
+
+\noindent\textbf{Non-logical symbols:}
+\begin{itemize}
+\item costanti $c_1, c_2, ...$
+\item funzioni $f_1, f_2, ...$ alle quali è associata una \textit{arità}
+\item relazioni $P_1, P_2, ...$ alle quali è associata una \textit{arità}
+\end{itemize}
+\end{fdefinition}
+
+
+\subsection{Terms e formule}
+
+Un \textbf{term} è l'elemento sintattico che rappresenta un oggetto del mondo.
+
+Ci sono tre possibili tipologie di \textbf{term}:
+\begin{enumerate}
+\item \textbf{costanti}: descrivono sempre uno specifico oggetto (p. es. "Mario", "Giappone");
+\item \textbf{variabili}: possono descrivere un qualsiasi oggetto, oppure essere associate ad un quantificatore;
+\item \textbf{funzioni}: un simbolo applicato a zero, uno o più \textit{terms} - il numero di \textit{terms} è definito dalla \textit{arità} del simbolo funzionale (oss: una funzione con \textit{arità} 0 è equivalente ad una costante).
+\end{enumerate}
+
+Un \textbf{predicate} o \textbf{relation} costituisce una "frase" in FOL. Un simbolo relazionale è applicato a zero, uno o più \textit{terms} - il numero di \textit{terms} è definito dalla \textit{arità} del simbolo relazionale. I \textbf{predicate} rappresentano delle relazioni fra oggetti del mondo.
+
+Il simbolo di uguaglianza $=$ può essere visto come una relazione con arità uguale a 2.
+
+Una \textbf{formula} è definita come segue.
+\begin{enumerate}
+\item Siano $t_1, ..., t_n$ \textit{terms}, $P$ relazione di arità $n$, allora $P(t_1, ..., t_n)$ è una formula. Vale anche: $t_1, t_2$ \textit{terms}, $t_1 = t_2$ è una formula.
+\item Siano $A, B$ formule, allora $A \land B$, $A \lor B$, $A \supset B$, $A \equiv B$, $\lnot A$ sono formule.
+\item Sia $A$ una formula, $x$ una variabile, allora sono formule $\forall x. A$ e $\exists x. A$.
+\end{enumerate}
+
+\subsection{Interpretazione in FOL}
+
+In PL, un'interpretazione consiste nell'associazione di variabili proposizionali al valore vero o falso. In FOL l'interpretazione è definita in modo più complesso; è composta da:
+\begin{enumerate}
+\item un dominio di interpretazione $\Delta$. Questo contiene tutti gli oggetti che vogliamo descrivere
+\item una funzione di interpretazione $I$ che mappa i simboli non logici in elementi del dominio:
+\begin{itemize}
+\item $I (c_i) \in \Delta$ (mappa le costanti in elementi del dominio)
+\item $I (P_i) \subset \Delta^n$ (mappa le relazioni di arità n in n-tuple)
+\item $I (f_i): \Delta^n \to \Delta$ (mappa le funzioni di arità n in elementi del dominio)
+\end{itemize}
+\end{enumerate}
+
+\textbf{Osservazione} (Relazioni e funzioni): esattamente come definite in algebra, le funzioni sono una specializzazione delle relazioni. In altre parole, ogni funzione di arità $n$ può essere equivalentemente rappresentata come una relazione di arità $n+1$. Esempio: $Mary$ è madre di $Joe$, $Jill$ e $Bill$. È possibile definire:
+\begin{itemize}
+\item $motherOf$ come una relazione di $\Delta^2$: $$motherOf \coloneqq \lbrace \langle Joe, Mary \rangle, \langle Jill, Mary \rangle, \langle Bill, Mary \rangle \rbrace$$
+\item $motherOf$ come una funzione $\Delta \to \Delta$: $$motherOf(Joe) = Mary, motherOf(Jill) = Mary, motherOf(Bill) = Mary$$
+\item $brotherOf$ come una relazione di $\Delta^2$: $$brotherOf \coloneqq \lbrace \langle Joe, Jill \rangle, \langle Jill, Joe \rangle, \langle Joe, Bill \rangle , \langle Bill, Joe \rangle, \langle Bill, Jill \rangle, \langle Jill, Bill \rangle \rbrace$$
+\item ...ma non è possibile definire brotherOf come una funzione $\Delta \to \Delta$: $brotherOf(Jill) = ?$
+\end{itemize}
+
+\subsection{Assignments}
+Formalmente, si definisce un'\textbf{assignment} $a[x/d]$ come una funzione ($a$) che mappa una variabile ($x$) in un elemento del dominio di interpretazione $d \in \Delta$. La funzione è interpretata come segue:
+\begin{itemize}
+\item se è applicata ad una costante, non ha alcun effetto: $$I(c)[a[x/d]] = c$$
+\item se è applicata ad una variabile, avviene la sostituzione $$I(x)[a[x/d]] = d$$
+\item se è applicata ad una funzione, l'assignment viene applicato ricorsivamente ai parametri della funzione $$I(f(t_1, ..., t_n))[a[x/d]] = I(f)(I(t_1)[a[x/d]], ..., I(t_n)[a[x/d]])$$
+\end{itemize}
+
+\subsection{Free variables}
+Una \textbf{occorrenza libera} (\textit{free occourence}) di una variabile $x$ in una formula $\varphi$ è un'occorrenza di $x$ che non è legata ad un quantificatore ($\forall, \exists$).
+\\
+
+Una \textbf{variabile} $x$ è \textbf{libera} in $\varphi$ se esiste almeno una occorrenza di $x$ in $\varphi$ che è libera.
+\\
+
+Una \textbf{formula} $\varphi$ è \textbf{ground} se non contiene nessuna variabile.
+\\
+
+Una formula $\varphi$ è \textbf{closed} se non contiene alcuna variabile libera.
+
+\textbf{Esempio: } $\varphi \coloneqq P(x) \supset \forall x. Q(x)$; $x$ è una variabile libera, infatti la prima occorrenza di $x$ è libera (la seconda non lo è).
+\\
+
+Un \textit{term} $t$ è libero per una certa variabile $x$ in una formula $\varphi$ se tutte le occorrenze di $x$ in $\varphi$ non sono nello scope di un quantificatore di una variabile che ha occorrenze in $t$. In altre parole: $t$ è libero per $x$ in $\varphi$ se si può sostituire $t$ al posto di $x$ senza che la formula cambi significato.
+
+\textbf{Esempio: } $\varphi \coloneqq \exists x. brotherOf(x, y)$; $t \coloneqq z$. Il term $t$ è libero per $y$: $\varphi' \coloneqq \exists x. brotherOf(x, z)$ ha lo stesso significato di $\varphi$. Il term $t$ non è però libero per $x$: $\varphi'' \coloneqq \exists x. brotherOf(x, x)$ ha un significato diverso da $\varphi$.
+
+\subsection{Procedure di decisione in FOL}
+Innanzitutto è necessario definire quando una interpretazione è modello di una formula in FOL. Si osservi che, in presenza di variabili libere, il significato della variabile non è definito finché non viene effettuato un \textit{assignment}. Scelte diverse degli \textit{assignment} possono determinare se un'interpretazione è o non è modello di una formula $\varphi$.
+
+Un'interpretazione $I$ soddisfa (è un \textbf{modello} per) una formula $\varphi$ rispetto ad un \textit{assignment} $a[x/d]$ secondo le seguenti regole:
+\begin{enumerate}
+\item ("Caso base") Se la formula è una relazione $P$ di arità $n$, allora $$I \models P(t_1, ..., t_n)[a] \iff \langle I(t_1)[a], ..., I(t_n)[a] \rangle \in I(P)$$
+Ovvero: affiché $\varphi$ sia soddisfatta deve esistere nell'interpretazione della relazione $P$ una relazione che contenga i \textit{terms} $t_1, ..., t_n$ a cui è stata applicata l'associazione $a$.\\
+Lo stesso è valido per la relazione di uguaglianza: $$I \models (t_1 = t_2)[a] \iff I(t_1)[a] = I(t_2)[a]$$
+\item (Formule composte) Siano $\varphi$, $\psi$ formule, allora (al solito):
+\begin{itemize}
+\item $I \models (\lnot \varphi ) [a] \iff I \not\models \varphi [a]$
+\item $I \models (\varphi \land \psi) [a] \iff (I \models \varphi [a]) \land (I \models \psi [a])$
+\item $I \models (\varphi \lor \psi) [a] \iff (I \models \varphi [a]) \lor (I \models \psi [a])$
+\item $I \models (\varphi \to \psi) [a] \iff (I \not\models \varphi [a]) \lor (I \models \psi [a])$
+\item $I \models (\varphi \equiv \psi) [a] \iff (I \models \varphi [a]) \equiv (I \models \psi [a])$
+\end{itemize}
+\vspace{1em}
+\item (Quantificatori) Sia $\varphi$ una formula, allora:
+\begin{itemize}
+\item $I \models (\exists q. \varphi)[a] \iff \exists z \in \Delta | I \models (\varphi[q/z])[a]$
+\item $I \models (\forall q. \varphi)[a] \iff \forall z \in \Delta | I \models (\varphi[q/z])[a]$
+\end{itemize}
+\end{enumerate}
+
+Una formula $\varphi$ è \textbf{soddisfacibile} se esiste una \textit{interpretazione} $I$ e un \textit{assignment} $a$ tali per cui $I \models \varphi[a]$.
+
+Una formula $\varphi$ è \textbf{insoddisfacibile} se non è soddisfacibile.
+
+Una formula $\varphi$ è \textbf{valida} se per ogni \textit{interpretazione} $I$ e per ogni \textit{assignment} $a$ vale $I \models \varphi[a]$.
+
+\textbf{Osservazione}: Se una formula è \textbf{chiusa}, la sua validità o (in)soddisfacibilità non dipende dall'assegnazione $a$ (l'assegnazione non ha alcun effetto sulla formula perché la formula non ha variabili libere sulle quali effettuare l'assegnazione).
+
+\subsection{Unique Name Assumption}
+
+La \textbf{UNA} (Unique Name Assumption) è un'assunzione che prevede che ogni elemento del dominio sia rappresentato da una e una sola costante. Tale assunzione si esprime in FOL con la seguente formula: siano ${c_1, ..., c_n} \subset \Delta$ tutte e sole le costanti del dominio, allora
+$$ \varphi_{UNA} \coloneqq (\bigwedge\limits_{i=1}^n \bigwedge\limits_{j=1,j\neq i}^n c_i \neq c_j) \land (\forall x \bigvee\limits_{i = 1}^n c_i = x)$$
+
+\subsection{Grounding}
+
+Se $\Delta$ è finito e vale la UNA, formule FOL possono essere proposizionalizzate (\textbf{grounded}, nel senso di rese \textit{ground}) riformulando i quantificatori come segue:
+\begin{itemize}
+\item $\forall x . \varphi(x) \equiv \bigwedge\limits_1^n  \varphi(c_i) $
+\item $\exists x . \varphi(x) \equiv \bigvee\limits_1^n  \varphi(c_i) $
+\end{itemize}
