@@ -103,5 +103,16 @@ Perché funziona? Spiegazione:
 \item $\exists x. \varphi(x)$ è equivalente a $\exists c \in \Delta | \varphi(c)$, dunque $\exists x. \varphi(x)$ è soddisfacibile sse $\varphi(c)$ è soddisfacibile.
 \end{enumerate}
 
-\noindent\hrulefill
 \vspace{1em}
+
+\subsection{Infinite tableaux}
+Se il \textit{tableaux} è applicato ad una formula FOL $\varphi$, e questa formula è \textbf{insoddisfacibile}, la costruzione del tableaux \textbf{termina} in un numero finito di passi.
+
+Se, però, il \textit{tableaux} è applicato ad una formula \textbf{soddisfacibile}, la sua costruzione \textbf{può terminare} in un numero finito di passi e lasciare qualche ramo aperto, \textbf{oppure non terminare}.
+
+Un \textit{tableaux} nel quale compare un \textit{ramo aperto saturato} sicuramente non può terminare. Nulla può dirsi in altri casi.
+
+\subsection{Open saturated branch}
+Un \textit{ramo aperto saturato} (open saturated branch) è un ramo nel quale ogni elemento che non sia un \textit{literal} è stato analizzato almeno una volta e, inoltre, in cui ogni $\gamma$ rule è stata applicata con ogni possibile \textit{term} presente sul ramo.
+
+La costruzione di un \textit{ramo aperto saturato} sicuramente non può terminare. È possibile tentare la costruzione di un modello su un ramo saturato analizzando le formule presenti sul ramo.
