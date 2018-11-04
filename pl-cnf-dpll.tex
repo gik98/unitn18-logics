@@ -1,1 +1,95 @@
 \chapter{PL - CNF \& DPLL}
+\begin{fdefinition}[Conjunctive Normal Form]
+\begin{itemize}
+\item A \textbf{literal} is a propositional variable $A$ or the negation of a propositional variable $\lnot A$
+\item A \textbf{clause} is a disjunction of literals $\bigvee\limits_{j=1}^m A_j$
+\item A \textbf{formula} is in \textbf{CNF} if it is a conjunction of clauses $\bigwedge\limits_{i=1}^n (\bigvee\limits_{j=1}^m I_{ij})$
+\end{itemize}
+\end{fdefinition}
+
+\subsubsection{Proposizioni:}
+\begin{enumerate}
+\item Ogni PL formula può essere ridotta in CNF
+\item $\models \mathrm{CNF}(\phi) \equiv \phi$ (Ogni Pl formula è equivalente alla sua riduzione in CNF)
+\end{enumerate}
+
+\subsubsection{Notazione insiemistica}
+Una formula in CNF può essere rappresentata come un insieme di \textit{clauses}, o un insieme di insiemi di \textit{literals}. Le operazioni sono implicite. La generica formula CNF $\bigwedge\limits_{i=1}^n (\bigvee\limits_{j=1}^m I_{ij})$ può essere rappresentata così: $\lbrace \lbrace I_{1,1}, ..., I_{1,m_1}\rbrace, ..., \lbrace I_{n, 1}, ..., I_{n, m_n} \rbrace \rbrace$.
+
+\subsection{Riduzione in CNF}
+\begin{itemize}
+\item $\mathrm{CNF}(p) = p$ if $p$ is a literal
+\item $\mathrm{CNF}(\lnot p)$ if $\lnot p$ is a literal
+\item $\mathrm{CNF}(\lnot \lnot p) = \mathrm{CNF}(p)$
+\end{itemize}
+\vspace{1em}
+\begin{itemize}
+\item $\mathrm{CNF}(\phi \to \psi) = \mathrm{CNF}(\lnot \phi) \oplus \mathrm{CNF}(\psi)$
+\item $\mathrm{CNF}(\phi \land \psi) = \mathrm{CNF}(\phi) \land \mathrm{CNF}(\psi)$
+\item $\mathrm{CNF}(\phi \lor \psi) = \mathrm{CNF}(\phi) \oplus \mathrm{CNF}(\psi)$
+\item $\mathrm{CNF}(\phi \equiv \psi) = \mathrm{CNF}(\phi \to \psi) \land\mathrm{CNF}(\psi \to \phi)$
+\end{itemize}
+\vspace{1em}
+\begin{itemize}
+\item $\mathrm{CNF}(\lnot (\phi \to \psi)) = \mathrm{CNF}(\phi) \land\mathrm{CNF}(\lnot \psi)$
+\item $\mathrm{CNF}(\lnot (\phi \land \psi)) = \mathrm{CNF}(\lnot \phi) \oplus \mathrm{CNF}(\lnot \psi)$
+\item $\mathrm{CNF}(\lnot (\phi \lor \psi)) = \mathrm{CNF}(\lnot \phi) \land \mathrm{CNF}(\lnot \psi)$
+\item $\mathrm{CNF}(\lnot (\phi \equiv \psi)) = \mathrm{CNF}(\phi \land \lnot \psi) \oplus \mathrm{CNF}(\psi \land \lnot \phi)$
+\end{itemize}
+
+Dove $\oplus$ è definito come segue: $$(C_1, ..., C_n) \oplus (D_1, ..., D_n) := (C_1 \lor D_1) \land ... \land (C_1 \lor D_n) \land ... \land (C_n \lor D_1) \land ... \land (C_n \lor D_n)$$
+
+\subsection{DPLL}
+
+\textbf{DPLL} è un algoritmo per calcolare la soddisfacibilità di una PL formula ridotta in \textbf{CNF}.
+
+\begin{fdefinition}[Partial evaluation]
+\textbf{Osservazioni:}\\
+Sia $F := C_0, ..., C_n = CNF (\varphi)$, $I$ funzione di interpretazione. Vale quanto segue:
+\begin{enumerate}
+\item $I \models \varphi \iff I \models C_i \forall i = 0, ..., n$ ($\varphi$ è soddisfatta se tutte le sue \textit{clauses} sono soddisfatte)
+\item $I \models C_i \iff \exists l \in C_i : I \models l$ (Una \textit{clause} è soddisfatta se almeno uno dei \textit{literals} che la compongono è soddisfatto)
+\end{enumerate}
+\textbf{Proposizione: } per verificare se $I$ soddisfa $F$ non è necessario conoscere le assegnazioni di ogni \textit{literal} che compare in $F$.
+\end{fdefinition}
+
+\begin{fdefinition}[Unit propagation]
+Sia $\varphi$ una PL formula, $I$ funzione di interpretazione; sia $u$ una \textit{unit clause} $\lbrace u \rbrace \in \varphi$ (\textit{clause} composta di un solo \textit{literal}). Vale: $I \models \varphi \iff I: u \mapsto \top$. (segue dalla proprietà (2) sopra esposta: una \textit{unit clause} non può essere soddisfatta se la sua unica componente non è valutata vera).
+\end{fdefinition}
+
+L'algoritmo \textbf{DPLL} calcola un possibile modello che soddisfa la PL formula $\varphi$, se esiste. La costruzione del modello $I$ avviene partendo da un insieme vuoto di assegnazioni, via via aumentato.
+
+Ad ogni passo dell'algoritmo le \textit{clauses} di $\varphi$ possono essere in uno dei seguenti stati rispertto al modello parziale $I'$, che va via via costruendosi:
+\begin{enumerate}
+\item una \textit{clause} $c \in \varphi$ è \textbf{vera} se $\exists l \in c | I: l \mapsto \top$ (se il modello parziale assegna il valore di verità ad uno dei \textit{literals} che la compongono)
+\item una \textit{clause} $c \in \varphi$ è \textbf{falsa} se $\forall l \in c | I: l \mapsto \bot$
+\item una \textit{clause} $c \in \varphi$ è \textbf{indecidibile} se non è né vera, né falsa
+\end{enumerate}
+
+Ad ogni passo l'algoritmo effettua un'operazione di assegnazione ad un \textit{literal} di una \textit{clause} ancora in uno stato indecidibile. Data la formula $\varphi$ e un literal $p$, indichiamo con $\varphi_{|p}$ la formula ottenuta sostituendo ad ogni occorrenza di $p$ il valore di verità $\top$, analogamente $\varphi_{|\lnot p}$ la formula ottenuta sostiutendo $\bot$ a $p$. Dalle osservazioni sulla \textit{partial evaluation} segue:
+\begin{itemize}
+\item tutte le \textit{clauses} contenenti almeno un \textit{literal} valutato $\top$ possono ora essere rimosse
+\item tutte le occorrenze di \textit{literal} valutati $\bot$ possono essere rimosse
+\end{itemize}
+
+L'algoritmo termina appena $\varphi$ contiene una \textit{clause} alla quale sono stati rimossi tutti i \textit{literals} (detta \textbf{empty clause}), in tal caso la formula è \textbf{insoddisfacibile}; oppure quando $\varphi$ non contiene più \textit{clauses}, in tal caso la formula è \textbf{soddisfacibile} e $I' = I$.\\
+
+\begin{mdframed}
+\begin{algorithm}[H]
+ \KwData{$\varphi$ PL formula ridotta in CNF, $I'$ modello parziale}
+ \KwResult{\textbf{SAT} se soddisfacibile, \textbf{UNSAT} altrimenti}
+ \DontPrintSemicolon
+ \;
+ \textbf{DPLL}($\varphi$, $I'$):\;
+ UnitPropagation($\varphi$, $I'$)\;
+ \uIf{$\lbrace \rbrace \in \varphi$}{
+ 	\Return{UNSAT}\;
+ }
+ \uIf{$\varphi = \lbrace \rbrace$}{
+ 	\Return{(SAT, $I'$)}\;
+ }
+ $l \leftarrow C \in \varphi$\;
+ DPLL($\varphi_{|l}$, $I' \cup \lbrace I'(l) = \top \rbrace$)\;
+ DPLL($\varphi_{|l}$, $I' \cup \lbrace I'(l) = \bot \rbrace$)\; 
+\end{algorithm}
+\end{mdframed}
