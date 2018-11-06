@@ -54,7 +54,7 @@ Sia $F := C_0, ..., C_n = CNF (\varphi)$, $I$ funzione di interpretazione. Vale 
 \end{fdefinition}
 
 \begin{fdefinition}[Unit propagation]
-Sia $\varphi$ una PL formula, $I$ funzione di interpretazione; sia $u$ una \textit{unit clause} $\lbrace u \rbrace \in \varphi$ (\textit{clause} composta di un solo \textit{literal}). Vale: $I \models \varphi \iff I: u \mapsto \top$. (segue dalla proprietà (2) sopra esposta: una \textit{unit clause} non può essere soddisfatta se la sua unica componente non è valutata vera).
+Sia $\varphi$ una PL formula, $I$ funzione di interpretazione; sia $u$ una \textit{unit clause} $\lbrace u \rbrace \in \varphi$ (\textit{clause} composta di un solo \textit{literal}). Vale: $I \models \varphi \to I: u \mapsto \top$. (segue dalla proprietà (2) sopra esposta: una \textit{unit clause} non può essere soddisfatta se la sua unica componente non è valutata vera).
 \end{fdefinition}
 
 L'algoritmo \textbf{DPLL} calcola un possibile modello che soddisfa la PL formula $\varphi$, se esiste. La costruzione del modello $I$ avviene partendo da un insieme vuoto di assegnazioni, via via aumentato.
