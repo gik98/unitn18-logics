@@ -93,14 +93,14 @@ $\varphi(c)$
 \end{tabular*}
 
 \begin{enumerate}
-\item Nelle $\gamma$ rules, $t$ rappresenta una \textit{variabile libera} già presente nella formula.
-\item Nelle $\gamma$ rules, $c$ rappresenta una \textit{nuova costante}, non presente nella formula.
+\item Nelle $\gamma$ rules, $t$ rappresenta una qualunque costante, anche già presente nella formula.
+\item Nelle $\delta$ rules, $c$ rappresenta una \textit{nuova costante}, non presente nella formula.
 \end{enumerate}
 
 Perché funziona? Spiegazione:
 \begin{enumerate}
-\item $\forall x . \varphi(x)$ significa che $\varphi$ deve essere soddisfatta per ogni elemento del dominio di interpretazione $\Delta$. Un \textit{term} $t$ sarà valutato in un elemento del dominio $\Delta$. Pertanto, $\forall x. \varphi(x) \supset \varphi[x/t]$.
-\item $\exists x. \varphi(x)$ è equivalente a $\exists c \in \Delta | \varphi(c)$, dunque $\exists x. \varphi(x)$ è soddisfacibile sse $\varphi(c)$ è soddisfacibile.
+\item $\forall x . \varphi(x)$ significa che $\varphi$ deve essere soddisfatta per ogni elemento del dominio di interpretazione $\Delta$. Una \textit{costante} $t$ è un elemento del dominio $\Delta$. Pertanto, $\forall x. \varphi(x) \supset \varphi[x/t]$.\\\textit{È lecito (e può essere necessario) applicare più volte una $\gamma$ rule}, utilizzando costanti diverse: l'applicazione rimane valida infatti per ogni costante del dominio.
+\item $\exists x. \varphi(x)$ è equivalente a $\exists c \in \Delta | \varphi(c)$, dunque $\exists x. \varphi(x)$ è soddisfacibile sse $\varphi(c)$ è soddisfacibile.\\È importante che ogni $\delta$ rule introduca una nuova costante: riutilizzare la stessa nello sviluppo di esistenziali diversi modificherebbe la formula di partenza; imporrebbe infatti che \textit{lo stesso} elemento del dominio $\Delta$ verifichi \textit{ogni} esistenziale!
 \end{enumerate}
 
 \vspace{1em}
