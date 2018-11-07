@@ -59,8 +59,9 @@ In PL, un'interpretazione consiste nell'associazione di variabili proposizionali
 
 \textbf{Osservazione} (Relazioni e funzioni): esattamente come definite in algebra, le funzioni possono essere viste come una specializzazione delle relazioni. In altre parole, ogni funzione di arità $n$ può essere equivalentemente rappresentata come una relazione di arità $n+1$. Esempio: $Mary$ è madre di $Joe$, $Jill$ e $Bill$. È possibile definire:
 \begin{itemize}
-\item $motherOf$ come una relazione di $\Delta^2$: $$motherOf \coloneqq \lbrace \langle Joe, Mary \rangle, \langle Jill, Mary \rangle, \langle Bill, Mary \rangle \rbrace$$
-\item $motherOf$ come una funzione $\Delta \to \Delta$: $$motherOf(Joe) = Mary, motherOf(Jill) = Mary, motherOf(Bill) = Mary$$
+\item $motherOf$ come una relazione di $\Delta^2$:
+$$motherOf \coloneqq \lbrace \langle Joe, Mary \rangle, \langle Jill, Mary \rangle, \langle Bill, Mary \rangle \rbrace$$
+\item $motherOf$ come una funzione $\Delta \to \Delta$: $$motherOf(Joe) = Mary, \quad motherOf(Jill) = Mary,\quad motherOf(Bill) = Mary$$
 \item $brotherOf$ come una relazione di $\Delta^2$: $$brotherOf \coloneqq \lbrace \langle Joe, Jill \rangle, \langle Jill, Joe \rangle, \langle Joe, Bill \rangle , \langle Bill, Joe \rangle, \langle Bill, Jill \rangle, \langle Jill, Bill \rangle \rbrace$$
 \item ...ma non è possibile definire brotherOf come una funzione $\Delta \to \Delta$: $brotherOf(Jill) = ?$
 \end{itemize}
@@ -90,7 +91,7 @@ Una formula $\varphi$ è \textbf{closed} se non contiene alcuna variabile libera
 
 Un \textit{term} $t$ è libero per una certa variabile $x$ in una formula $\varphi$ se tutte le occorrenze di $x$ in $\varphi$ non sono nello scope di un quantificatore di una variabile che ha occorrenze in $t$. In altre parole: $t$ è libero per $x$ in $\varphi$ se si può sostituire $t$ al posto di $x$ senza che la formula cambi significato.
 
-\textbf{Esempio: } $\varphi \coloneqq \exists x. brotherOf(x, y)$; $t \coloneqq z$. Il term $t$ è libero per $y$: $\varphi' \coloneqq \exists x. brotherOf(x, z)$ ha lo stesso significato di $\varphi$. Il term $t$ non è però libero per $x$: $\varphi'' \coloneqq \exists x. brotherOf(x, x)$ ha un significato diverso da $\varphi$.
+\textbf{Esempio: } $\varphi \coloneqq \exists x. brotherOf(x, y)$; $t \coloneqq z$; $u \coloneqq x$. Il term $t$ è libero per $y$: $\varphi' \coloneqq \exists x. brotherOf(x, z)$ ha lo stesso significato di $\varphi$. Il term $u$ non è però libero per $y$: $\varphi'' \coloneqq \exists x. brotherOf(x, x)$ ha un significato diverso da $\varphi$.
 
 \subsection{Procedure di decisione in FOL}
 Innanzitutto è necessario definire quando una interpretazione è modello di una formula in FOL. Si osservi che, in presenza di variabili libere, il significato della variabile non è definito finché non viene effettuato un \textit{assignment}. Scelte diverse degli \textit{assignment} possono determinare se un'interpretazione è o non è modello di una formula $\varphi$.
@@ -148,7 +149,7 @@ $$Employee(x, y, x, z)$$
 
 \subsection{Unique Name Assumption}
 
-La \textbf{UNA} (Unique Name Assumption) è un'assunzione che prevede che ogni elemento del dominio sia rappresentato da una e una sola costante. Tale assunzione si esprime in FOL con la seguente formula: siano ${c_1, ..., c_n} \subset \Delta$ tutte e sole le costanti del dominio, allora
+La \textbf{UNA} (Unique Name Assumption) è un'assunzione che prevede che ogni elemento del dominio sia rappresentato da una e una sola costante. Tale assunzione si esprime in FOL con la seguente formula: siano $\lbrace c_1, ..., c_n \rbrace \subseteq \Delta$ tutte e sole le costanti del dominio, allora
 $$ \varphi_{UNA} \coloneqq (\bigwedge\limits_{i=1}^n \bigwedge\limits_{j=1,j\neq i}^n c_i \neq c_j) \land (\forall x \bigvee\limits_{i = 1}^n c_i = x)$$
 
 \subsection{Grounding}
