@@ -66,6 +66,13 @@ $$motherOf \coloneqq \lbrace \langle Joe, Mary \rangle, \langle Jill, Mary \rang
 \item ...ma non è possibile definire brotherOf come una funzione $\Delta \to \Delta$: $brotherOf(Jill) = ?$
 \end{itemize}
 
+\vspace{1em}
+Funzioni e predicati, inoltre, sono elementi sintattici diversi: una funzione è semplicemente un \textit{term}, un predicato è a sé già una funzione. Ad esempio, per formalizzare la frase "la madre di Joe è simpatica", hanno lo stesso significato:
+\begin{itemize}
+\item $Nice(motherOf(Jill))$ - $motherOf$ come funzione
+\item $\exists x. MotherOf(Joe, x) \land Nice(x) $ - $MotherOf$ come predicato
+\end{itemize}
+
 \subsection{Assignments}
 Formalmente, si definisce un'\textbf{assignment} $a[x/d]$ come una funzione ($a$) che mappa una variabile ($x$) in un elemento del dominio di interpretazione $d \in \Delta$. La funzione è interpretata come segue:
 \begin{itemize}
@@ -159,3 +166,5 @@ Se $\Delta$ è finito e vale la UNA, formule FOL possono essere proposizionalizz
 \item $\forall x . \varphi(x) \equiv \bigwedge\limits_1^n  \varphi(c_i) $
 \item $\exists x . \varphi(x) \equiv \bigvee\limits_1^n  \varphi(c_i) $
 \end{itemize}
+
+In questo senso, dunque, su un dominio $\Delta$ finito è possibile applicare l'algoritmo \textbf{DPLL} su una formula FOL. Una volta resa \textit{ground} e applicata la \textbf{UNA}, infatti, la formula FOL è anche una formula PL (contiene solo costanti e operatori proposizionali).

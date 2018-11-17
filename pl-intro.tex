@@ -63,6 +63,21 @@ Se $\mathrm{A}$ è \textbf{UNSAT}, $\lnot \mathrm{A}$ è \textbf{VALID}.
 
 \textbf{Logical consequence ($\Gamma$, $\varphi$)}: $\Gamma \stackrel{?}{\models} \varphi$ (Ogni modello che soddisfa $\Gamma$ soddisfa anche $\varphi$?)
 
+\subsection{Proprietà della conseguenza logica}
+Siano $\Gamma$ e $\Sigma$ due insiemi di formule proposizionali; $A$, $B$ due formule proposizionali, allora valgono le seguenti proprietà:
+
+\textbf{Reflexivity:} $\lbrace A \rbrace \models A$
+
+\textbf{Monotonicity:} Se $\Gamma \models A$ allora $\Gamma \cup \Sigma \models A$
+
+\textbf{Cut:} Se $\Gamma \models A$ and $\Sigma \cup \lbrace A \rbrace \models B$ allora $\Gamma \cup \Sigma \models B$
+
+\textbf{Compactness:} Se $\Sigma \models A$, allora esiste un sottoinsieme finito $\Gamma_0 \subseteq \Gamma$ tale che $\Gamma_0 \models A$
+
+\textbf{Deduction theorem} Se $\Gamma$, $A \models B$ allora $\Gamma \models A \to B$
+
+\textbf{Refutation principle:} $\Gamma \models A$ se e solo se $\Gamma \cup \lbrace \lnot A \rbrace$ è insoddisfacibile
+
 \subsection{Formalizzazione del linguaggio naturale}
 
 \begin{itemize}
