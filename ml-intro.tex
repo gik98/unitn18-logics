@@ -1,0 +1,66 @@
+\chapter{ML - Introduzione}
+
+	La logica modale è un'estensione della logica proposizionale. Una \textit{modalità} è un'operatore che qualifica ("esprime il modo in cui") una proposizione è valida.
+	Numerosi tipi di modalità diverse possono essere rappresentate in ML; storicamente, il primo tipo di modalità ad essere stato impiegato è la modalità \textit{aletica}, comprendente gli operatori "è necessario che", "è possibile che". Un altro tipo di modalità è la \textit{deontica} ("è obbligatorio", "è permesso", "è vietato").
+	
+\begin{fdefinition}[Linguaggio della ML]
+Nel contesto della logica modale aletica, sono definiti i due operatori modali che possono essere applicati a formule:
+\begin{enumerate}
+\item $\Box \varphi$: "è obbligatorio che $\varphi$"
+\item $\Diamond \varphi$ "è possibile che $\varphi$"
+\end{enumerate}
+Sia $P$ un insieme di proposizioni, allora:
+\begin{enumerate}
+\item ogni $p \in P$ è una formula (atomica);
+\item se $A, B$ sono formule, allora sono formule $A \land B, A \lor B, A \subset B, A \equiv B, \lnot A$
+\item se $A$ è una formula, allora sono formule $\Box A, \Diamond A$
+\end{enumerate}
+
+L'operatore di possibilità può essere definito in termini dell'operatore di necessità:
+$$\Diamond \varphi \coloneqq \lnot \Box \lnot \varphi$$
+\end{fdefinition}
+
+\subsection{Semantica della ML (Relational Structure)}
+Un \textbf{frame} (anche chiamato: Kripke frame, Basic frame o Modal frame) è una coppia $F = \langle W, R\rangle$, in cui $W$ è un insieme e $R$ è un insieme di relazioni binaria sull'insieme $W$.
+\begin{itemize}
+\item $w \in W$ è un \textit{punto}, o \textit{mondo}, del frame;
+\item $R \subset W \times W$ definisce le \textit{relazioni di accessibilità} fra i mondi: $\langle w_1, w_2 \rangle \in R$ significa che il mondo $w_2$ è accessibile da $w_1$ (e non necessariamente viceversa) nel frame $F$.
+\end{itemize}
+
+Una \textbf{funzione di interpretazione} $I$ in ML è una funzione che assegna valori di verità o falsità \textit{relativi ad un certo mondo} alle formule:\\ $$I: P \to 2 ^ W$$ (il sottoinsieme dei mondi nei quali la formula $P$ è assegnata al valore di verità);
+alternativamente: $$I: (P, W) \to \lbrace \top, \bot \rbrace$$ (l'assegnazione alla formula $P$ nel mondo $W$).
+
+Un \textbf{modello} $M = \langle F, I \rangle$ è una coppia frame, interpretazione.
+
+\subsection{Soddisfacibilità delle formule in ML}
+Un modello $M$ soddisfa una formula $\varphi$ in un mondo $w$ se $w \in I(\varphi)$. Con l'osservazione che la soddisfacibilità di una formula è relativa al modello \textbf{e} al mondo, valgono le solite definizioni:
+\begin{itemize}
+\item $(M, w) \models \varphi \iff w \in I(\varphi)$
+\item $(M, w) \models \lnot \varphi \iff w \not\in I(\varphi)$
+\item $(M, w) \models \varphi \land \psi \iff w \in I(\varphi) \land w \in I(\psi)$
+\item $(M, w) \models \varphi \lor \psi \iff w \in I(\varphi) \lor w \in I(\psi)$
+\item $(M, w) \models \varphi \subset \psi \iff w \in I(\varphi) \subset w \in I(\psi)$
+\item $(M, w) \models \varphi \equiv \psi \iff w \in I(\varphi) \equiv w \in I(\psi)$
+\end{itemize}
+Per gli operatori di necessità e possibilità valgono le seguenti definizioni:
+\begin{itemize}
+\item $(M, w) \models \Box \varphi \iff \forall w' | wRw', (M, w') \models \varphi)$
+\item $(M, w) \models \Diamond \varphi \iff \exists w' | wRw', (M, w') \models \varphi)$
+\end{itemize}
+A parole: $M$ è un modello per $\Box \varphi$ nel mondo $w$ sse per ogni mondo $w'$ raggiungibile da $w$ ($w$ in $R$-relazione con $w'$), $M$ soddisfa $\varphi$ nel mondo $w'$.
+
+\textbf{Osservazione}: Si supponga $w \in W, Y = \lbrace w' \in W | wRw' \rbrace = \emptyset$ (dal mondo $w$ non è possibile raggiungere nessun altro mondo). Allora per una qualsiasi formula $\varphi$ vale:
+\begin{enumerate}
+\item $\Box \varphi$ nel mondo $w$ è necessariamente falso;
+\item $\Diamond \varphi$ nel mondo $w$ è necessariamente vero.
+\end{enumerate}
+
+\textbf{Global satisfiability:} $\varphi$ è globalmente soddisfacibile nel modello $M$ sse $\forall w \in W, (M, w) \models \varphi$ ($M$ soddisfa $\varphi$ in ogni mondo).
+
+Una formula $\varphi$ è \textbf{valida in un mondo} $w$ di un frame $F$ ($F, w \models \varphi$) sse $\forall I, M = \langle F, I \rangle$ vale $w \in I(\varphi)$ (qualsiasi assegnazione della funzione di interpretazione rende $\varphi$ vera nel mondo $w$).
+
+Una formula $\varphi$ è \textbf{valida} ($F \models \varphi$) sse è valida per tutti i mondi del frame.
+
+\subsection{Rappresentazione grafica}
+
+\subsection{Esprimere proprietà sulla struttura del frame}
