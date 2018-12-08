@@ -63,4 +63,49 @@ Una formula $\varphi$ è \textbf{valida} ($F \models \varphi$) sse è valida per
 
 \subsection{Rappresentazione grafica}
 
+Si consideri il frame $F = \langle W, R \rangle$, dove:
+$$W = \lbrace A, B, C, D \rbrace$$
+$$R = \lbrace \langle A, B \rangle, \langle C, B \rangle, \langle A, C \rangle, \langle A, D \rangle, \langle D, B \rangle \rbrace$$
+
+\begin{center}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance = {1.0cm and 1.5cm}, v/.style = {draw, circle}]
+  \graph[nodes={circle, draw}, grow right=2.25cm, branch down=1.75cm]{
+    A -> B <- C,
+    A -> [bend left] C,
+    A -> D,
+    D -> B
+  };
+\end{tikzpicture}
+\caption{Rappresentazione grafica del frame $F$}
+\label{fig:kripke-graph}
+\end{figure}
+\end{center}
+
 \subsection{Esprimere proprietà sulla struttura del frame}
+
+Si consideri il frame $F$ come rappresentato dal grafo di \ref{fig:kripke-graph}. Attraverso gli operatori della logica modale è possibile esprimere delle proprietà sulla struttura del grafo (quindi sulla struttura del frame).
+
+Dato il frame $F$, diciamo che il mondo $w$ è successore di $v$ se $\lbrace v, w \rbrace \in R$. La stessa proprietà sulla rappresentazione del frame in forma di grafo diretto può essere espressa come: dato il grafo $G = (V, E)$ il vertice $w \in V$ è successore di $v \in V$ se esiste $e = (v, w) \in E$.
+
+Seguono diversi esempi di proprietà che si possono esprimere su un frame $F = \lbrace W, R \rbrace$, $w \in W$:
+
+\begin{enumerate}
+\item $\Diamond p$ è vero in $w$ $\iff$ $\exists v$ successore di $w | p$ è vero
+\item $\Diamond \Diamond \top$ è vero in $w$ $\iff$ $\exists y$ successore di $v$ successore di $w$
+\item $\underbrace{\Diamond \dots \Diamond}_\text{n} p$ è vero in $w$ $\iff$ esiste un cammino di lunghezza $n$ che parte da $w$ per raggiungere il mondo $v|p $ è vero in $v$
+\item $\underbrace{\Diamond \dots \Diamond}_\text{n} \top$ è vero in $w$ $\iff$ esiste un cammino di lunghezza $n$ che parte da $w$
+\item $\Box \bot$ è vero in $w$ $\iff$ $w$ non ha successori
+\item $\Box p$ è vero in $w$ $\iff$ $\forall v$ successori di $w | p$ è vero in $v$
+\item $\underbrace{\Box \dots \Box}_\text{n} p$ è vero in $w$ $\iff$ tutti i cammini che partono da $w$ di lunghezza $n$ arrivano in un qualche mondo $v|p $ è vero in ogni $v$
+\item $\underbrace{\Box \dots \Box}_\text{n} \bot$ è vero in $w$ $\iff$ tutti i cammini che partono da $w$ sono lunghi al più $n-1$.
+
+\end{enumerate}
+
+\subsection{Logiche multi-modali}
+Le definizioni date per una logica modale con una certa modalità possono essere estese a logiche modali che prevedono di usare più modalità contemporaneamente.
+
+In generale, una logica multi-modale con un numero di modalità $n$ prevederà $n$ operatori $\Box$ ($\Box_1, \dots, \Box_n$) e $n$ operatori $\Diamond$ ($\Diamond_1 \dots \Diamond_n$).
+
+Il frame di Kripke per una logica multi-modale ($F = \langle W, R_1, \dots, R_n \rangle$) prevede un insieme di mondi $W$ e $n$ insiemi di relazioni $R_1, \dots, R_n$; gli operatori della modalità $i$ sono valutati secondo la relazione $R_i$.
