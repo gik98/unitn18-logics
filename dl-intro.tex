@@ -1,0 +1,15 @@
+\chapter{DL - Introduction}
+
+La logica descrittiva è una famiglia di formalismi che permettono una rappresentazione della conoscenza in un dominio ("mondo"). DL prevede prima la definizione della \textbf{terminologia} rilevanti del dominio (classi di oggetti e gerarchia fra queste); questi concetti sono poi impiegati per specificare proprietà sugli \textbf{oggetti} che compongono il dominio (la "descrizione" del "mondo").
+
+Obiettivo della DL è rispondere a task di ragionamento sulla struttura della terminologia (p.es.: il termine - la classe $Canary$ è una specializzazione di $Bird$?) oppure sugli oggetti che compongono il mondo (p.es.: l'oggetto $foo$ gode della proprietà - è membro della classe $Canary$?).
+
+\subsection{Knowledge Base}
+
+In DL, la Knoledge Base è composta dall'insieme della \textit{terminologia} e della \textit{descrizione} del mondo. Queste due componenti sono chiamate \textbf{TBox} e \textbf{ABox}.
+\begin{enumerate}
+\item Il \textbf{TBox} è l'insieme della \textit{terminologia}, il "vocabolario" della KB. Il vocabolario consiste di \textit{atomic concepts}, che denotano classi di oggetti, e \textit{roles}, che denotano relazioni fra \textit{concepts}. Ulteriori \textit{concepts} derivati possono essere composti combinando \textit{atomic roles}; equivalentemente per le \textit{roles}.
+\item La \textbf{ABox} introduce \textit{oggetti} del mondo, assegnando loro un nome e effettuando \textit{asserzioni} su essi; le asserzioni sono espresse nella terminologia della TBox.
+\end{enumerate}
+\subsection{Attributive Concept Language with Complements}
+
