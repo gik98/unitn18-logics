@@ -11,5 +11,25 @@ In DL, la Knoledge Base è composta dall'insieme della \textit{terminologia} e d
 \item Il \textbf{TBox} è l'insieme della \textit{terminologia}, il "vocabolario" della KB. Il vocabolario consiste di \textit{atomic concepts}, che denotano classi di oggetti, e \textit{roles}, che denotano relazioni fra \textit{concepts}. Ulteriori \textit{concepts} derivati possono essere composti combinando \textit{atomic roles}; equivalentemente per le \textit{roles}.
 \item La \textbf{ABox} introduce \textit{oggetti} del mondo, assegnando loro un nome e effettuando \textit{asserzioni} su essi; le asserzioni sono espresse nella terminologia della TBox.
 \end{enumerate}
-\subsection{Attributive Concept Language with Complements}
 
+\subsection{Attributive Concept Language with Complements}
+$\mathcal{ALC}$ (Attributive Concept Language with Complements) è un linguaggio di description logics. La descrizione del mondo in $\mathcal{ALC}$ comprende \textit{concept atomici} e \textit{roles atomici} (proprietà che descrivono i concepts); descrizioni complesse possono essere ottenute componento descrizioni atomiche secondo le regole sintatiche.
+
+\begin{fdefinition}[Linguaggio $\mathcal{ALC}$ per la TBox]
+I \textit{concepts} sono composti secondo le seguenti regole sintattiche.
+
+\textbf{Concept atomici:}
+\begin{enumerate}
+\item $A$ un concept atomico \\ Esempio: $Person$
+\item $\top$ il concept universale
+\item $\bot$ l'opposto del concept universale
+\item $\lnot A$ la negazione di un concept atomico
+\end{enumerate}
+\textbf{Concept composti (well formed formulas):}
+\begin{enumerate}
+\item $F \coloneqq C \sqcap D$ l'intersezione fra due concept \\ Esempio: $Woman \coloneqq Person \sqcap Female$
+\item $F \coloneqq C \sqcup D$ l'unione di due concept \\ Esempio: $Parent \coloneqq Father \sqcup Mother$
+\item $F \coloneqq \forall R. C$ la restrizione universale di un concept ad un role \\ Esempio: $F \coloneqq Person \sqcap \forall hasChild. Female$ (F descrive le persone che hanno tutte le figlie femmina)\\ Esempio: $G \coloneqq Person \sqcap \forall hasChild.\bot$ (G descrive tutte le persone che non hanno figli)
+\item $F \coloneqq \exists R. C$ la restrizione esistenziale di un concept rispetto ad un role \\ Esempio: $Parent \coloneqq Person \sqcap \exists hasChild.\top$ (Parent sono le persone che hanno (almeno) un figlio) \\ Esempio: $F \coloneqq Person \sqcap hasChild. Female$ (F descrive le persone che hanno (almeno) una figlia femmina)
+\end{enumerate}
+\end{fdefinition}
