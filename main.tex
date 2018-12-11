@@ -10,8 +10,13 @@
 \usepackage{calrsfs}
 \usepackage[]{algorithm2e}
 \usepackage{mathtools}
+\usepackage[mathcal,mathscr]{eucal}
+\usepackage{float}
 
-\theoremstyle{break}\usepackage[italian]{babel}
+\usepackage{tikz}
+\usetikzlibrary{graphs, graphs.standard, quotes}% quotes library is for the [""] edges
+
+\theoremstyle{break}\usepackage[italian,english]{babel}
 \usepackage[utf8]{inputenc}
 
 \theoremstyle{break}
@@ -38,10 +43,12 @@
 		{\Huge\bfseries Appunti di Logica}\\[4\baselineskip]
 		{\large\textit{Sul corso di Logica Matematica @ DISI,\\ Università degli Studi di Trento}}\\\\
 		{\textsc{A.A. 2018/2019}\\[3\baselineskip]
-		%\textit{Giacomo Fabris}
+		%\texttt{github.com/gik98/unitn18-logics}
 		}
 		
-		\vspace{0.5\textheight} % Whitespace between the title block and the publisher
+		\vspace{0.4\textheight}
+		
+		\texttt{github.com/gik98/unitn18-logics}
 		
 	}
 
@@ -52,4 +59,10 @@
 \include{pl-tableaux}
 \include{fol-intro}
 \include{fol-tableaux}
+\include{ml-intro}
+\include{ml-axioms}
+\include{ml-tableaux}
+\include{dl-intro}
+\include{dl-tableaux}
+\include{dl-db}
 \end{document}

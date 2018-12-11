@@ -1,0 +1,111 @@
+\chapter{ML - Introduzione}
+
+	La logica modale è un'estensione della logica proposizionale. Una \textit{modalità} è un'operatore che qualifica ("esprime il modo in cui") una proposizione è valida.
+	Numerosi tipi di modalità diverse possono essere rappresentate in ML; storicamente, il primo tipo di modalità ad essere stato impiegato è la modalità \textit{aletica}, comprendente gli operatori "è necessario che", "è possibile che". Un altro tipo di modalità è la \textit{deontica} ("è obbligatorio", "è permesso", "è vietato").
+	
+\begin{fdefinition}[Linguaggio della ML]
+Nel contesto della logica modale aletica, sono definiti i due operatori modali che possono essere applicati a formule:
+\begin{enumerate}
+\item $\Box \varphi$: "è obbligatorio che $\varphi$"
+\item $\Diamond \varphi$ "è possibile che $\varphi$"
+\end{enumerate}
+Sia $P$ un insieme di proposizioni, allora:
+\begin{enumerate}
+\item ogni $p \in P$ è una formula (atomica);
+\item se $A, B$ sono formule, allora sono formule $A \land B, A \lor B, A \subset B, A \equiv B, \lnot A$
+\item se $A$ è una formula, allora sono formule $\Box A, \Diamond A$
+\end{enumerate}
+
+L'operatore di possibilità può essere definito in termini dell'operatore di necessità:
+$$\Diamond \varphi \coloneqq \lnot \Box \lnot \varphi$$
+\end{fdefinition}
+
+\subsection{Semantica della ML (Relational Structure)}
+Un \textbf{frame} (anche chiamato: Kripke frame, Basic frame o Modal frame) è una coppia $F = \langle W, R\rangle$, in cui $W$ è un insieme e $R$ è una relazione binaria sull'insieme $W$.
+\begin{itemize}
+\item $w \in W$ è un \textit{punto}, o \textit{mondo}, del frame;
+\item $R \subset W \times W$ definisce le \textit{relazioni di accessibilità} fra i mondi: $\langle w_1, w_2 \rangle \in R$ significa che il mondo $w_2$ è accessibile da $w_1$ (e non necessariamente viceversa) nel frame $F$.
+\end{itemize}
+
+Una \textbf{funzione di interpretazione} $I$ in ML è una funzione che assegna valori di verità o falsità \textit{relativi ad un certo mondo} alle formule:\\ $$I: P \to 2 ^ W$$ (il sottoinsieme dei mondi nei quali la formula $P$ è assegnata al valore di verità);
+alternativamente: $$I: (P, W) \to \lbrace \top, \bot \rbrace$$ (l'assegnazione alla formula $P$ nel mondo $W$).
+
+Un \textbf{modello} $M = \langle F, I \rangle$ è una coppia frame, interpretazione.
+
+\subsection{Soddisfacibilità delle formule in ML}
+Un modello $M$ soddisfa una formula $\varphi$ in un mondo $w$ se $w \in I(\varphi)$. Con l'osservazione che la soddisfacibilità di una formula è relativa al modello \textbf{e} al mondo, valgono le solite definizioni:
+\begin{itemize}
+\item $(M, w) \models \varphi \iff w \in I(\varphi)$
+\item $(M, w) \models \lnot \varphi \iff w \not\in I(\varphi)$
+\item $(M, w) \models \varphi \land \psi \iff w \in I(\varphi) \land w \in I(\psi)$
+\item $(M, w) \models \varphi \lor \psi \iff w \in I(\varphi) \lor w \in I(\psi)$
+\item $(M, w) \models \varphi \subset \psi \iff w \in I(\varphi) \subset w \in I(\psi)$
+\item $(M, w) \models \varphi \equiv \psi \iff w \in I(\varphi) \equiv w \in I(\psi)$
+\end{itemize}
+Per gli operatori di necessità e possibilità valgono le seguenti definizioni:
+\begin{itemize}
+\item $(M, w) \models \Box \varphi \iff \forall w' | wRw', (M, w') \models \varphi)$
+\item $(M, w) \models \Diamond \varphi \iff \exists w' | wRw', (M, w') \models \varphi)$
+\end{itemize}
+A parole: $M$ è un modello per $\Box \varphi$ nel mondo $w$ sse per ogni mondo $w'$ raggiungibile da $w$ ($w$ in $R$-relazione con $w'$), $M$ soddisfa $\varphi$ nel mondo $w'$.
+
+\textbf{Osservazione}: Si supponga $w \in W, Y = \lbrace w' \in W | wRw' \rbrace = \emptyset$ (dal mondo $w$ non è possibile raggiungere nessun altro mondo). Allora per una qualsiasi formula $\varphi$ vale:
+\begin{enumerate}
+\item $\Box \varphi$ nel mondo $w$ è necessariamente falso;
+\item $\Diamond \varphi$ nel mondo $w$ è necessariamente vero.
+\end{enumerate}
+
+\textbf{Global satisfiability:} $\varphi$ è globalmente soddisfacibile nel modello $M$ sse $\forall w \in W, (M, w) \models \varphi$ ($M$ soddisfa $\varphi$ in ogni mondo).
+
+Una formula $\varphi$ è \textbf{valida in un mondo} $w$ di un frame $F$ ($F, w \models \varphi$) sse $\forall I, M = \langle F, I \rangle$ vale $w \in I(\varphi)$ (qualsiasi assegnazione della funzione di interpretazione rende $\varphi$ vera nel mondo $w$).
+
+Una formula $\varphi$ è \textbf{valida} ($F \models \varphi$) sse è valida per tutti i mondi del frame.
+
+\subsection{Rappresentazione grafica}
+
+Si consideri il frame $F = \langle W, R \rangle$, dove:
+$$W = \lbrace A, B, C, D \rbrace$$
+$$R = \lbrace \langle A, B \rangle, \langle C, B \rangle, \langle A, C \rangle, \langle A, D \rangle, \langle D, B \rangle \rbrace$$
+
+\begin{center}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance = {1.0cm and 1.5cm}, v/.style = {draw, circle}]
+  \graph[nodes={circle, draw}, grow right=2.25cm, branch down=1.75cm]{
+    A -> B <- C,
+    A -> [bend left] C,
+    A -> D,
+    D -> B
+  };
+\end{tikzpicture}
+\caption{Rappresentazione grafica del frame $F$}
+\label{fig:kripke-graph}
+\end{figure}
+\end{center}
+
+\subsection{Esprimere proprietà sulla struttura del frame}
+
+Si consideri il frame $F$ come rappresentato dal grafo di \ref{fig:kripke-graph}. Attraverso gli operatori della logica modale è possibile esprimere delle proprietà sulla struttura del grafo (quindi sulla struttura del frame).
+
+Dato il frame $F$, diciamo che il mondo $w$ è successore di $v$ se $\lbrace v, w \rbrace \in R$. La stessa proprietà sulla rappresentazione del frame in forma di grafo diretto può essere espressa come: dato il grafo $G = (V, E)$ il vertice $w \in V$ è successore di $v \in V$ se esiste $e = (v, w) \in E$.
+
+Seguono diversi esempi di proprietà che si possono esprimere su un frame $F = \lbrace W, R \rbrace$, $w \in W$:
+
+\begin{enumerate}
+\item $\Diamond p$ è vero in $w$ $\iff$ $\exists v$ successore di $w | p$ è vero
+\item $\Diamond \Diamond \top$ è vero in $w$ $\iff$ $\exists y$ successore di $v$ successore di $w$
+\item $\underbrace{\Diamond \dots \Diamond}_\text{n} p$ è vero in $w$ $\iff$ esiste un cammino di lunghezza $n$ che parte da $w$ per raggiungere il mondo $v|p $ è vero in $v$
+\item $\underbrace{\Diamond \dots \Diamond}_\text{n} \top$ è vero in $w$ $\iff$ esiste un cammino di lunghezza $n$ che parte da $w$
+\item $\Box \bot$ è vero in $w$ $\iff$ $w$ non ha successori
+\item $\Box p$ è vero in $w$ $\iff$ $\forall v$ successori di $w | p$ è vero in $v$
+\item $\underbrace{\Box \dots \Box}_\text{n} p$ è vero in $w$ $\iff$ tutti i cammini che partono da $w$ di lunghezza $n$ arrivano in un qualche mondo $v|p $ è vero in ogni $v$
+\item $\underbrace{\Box \dots \Box}_\text{n} \bot$ è vero in $w$ $\iff$ tutti i cammini che partono da $w$ sono lunghi al più $n-1$.
+
+\end{enumerate}
+
+\subsection{Logiche multi-modali}
+Le definizioni date per una logica modale con una certa modalità possono essere estese a logiche modali che prevedono di usare più modalità contemporaneamente.
+
+In generale, una logica multi-modale con un numero di modalità $n$ prevederà $n$ operatori $\Box$ ($\Box_1, \dots, \Box_n$) e $n$ operatori $\Diamond$ ($\Diamond_1 \dots \Diamond_n$).
+
+Il frame di Kripke per una logica multi-modale ($F = \langle W, R_1, \dots, R_n \rangle$) prevede un insieme di mondi $W$ e $n$ insiemi di relazioni $R_1, \dots, R_n$; gli operatori della modalità $i$ sono valutati secondo la relazione $R_i$.

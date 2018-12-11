@@ -89,3 +89,19 @@ Siano $\Gamma$ e $\Sigma$ due insiemi di formule proposizionali; $A$, $B$ due fo
 \item $\lnot (A \lor B)$: "Neither A nor B"
 \item $\lnot (A \land B)$: "It is not the case that both A and B"
 \end{itemize}
+
+\subsection{Assiomatizzazione di Hilbert della logica proposizionale}
+Il sistema deduttivo di Hilbert propone quattro assiomi fondamentali per descrivere la logica proposizionale. I primi tre caratterizzano le solite proprietà degli operatori proposizionali, la quarta (\textbf{Modus ponens}) è una regola per la deduzione logica.
+\begin{enumerate}
+\item $\varphi \supset (\psi \supset \varphi)$
+\item $(\varphi \supset (\psi \supset \vartheta) ) \supset ((\varphi \supset \psi) \supset (\varphi \supset \vartheta) $
+\item $(\lnot \psi \supset \lnot \varphi) \supset ((\lnot \psi \supset \varphi ) \supset \psi )$
+\item Sia $\varphi$ vero, allora $(\varphi \supset \psi) \supset \psi$
+\end{enumerate}
+
+Gli assiomi sono espressi utilizzando solo gli operatori $\supset$ e $\lnot$. Si osservi che è possibile definire $\land$ e $\lor$ in termini di questi, come segue:
+\begin{itemize}
+\item $\alpha \supset \beta \supset \alpha \land \beta$
+\item $(\alpha \supset \gamma) \supset (\beta \supset \gamma) \supset \alpha \lor \beta$
+\end{itemize}
+

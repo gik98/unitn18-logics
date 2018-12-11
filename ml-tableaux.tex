@@ -1,0 +1,115 @@
+\chapter{ML - Tableaux}
+
+\textit{Il funzionamento del tableaux in ML presenta delle forti analogie con il tableaux della FOL. Sostanzialmente, l'operatore $\Diamond$ di ML può essere mappato sull'operatore $\exists$ di FOL; l'operatore $\Box$ di ML può essere mappato sull'operatore $\forall$ di FOL. Accortezze devono essere prestate sulle relazioni del frame.}
+\\
+
+Al solito, il \textbf{tableaux} è un algoritmo per calcolare la soddisfacibilità - insoddisfacibilità - validità di una formula. In logica modale, un tableaux è un albero in cui in ogni nodo è presente un'affermazione relativa alla formula in un certo mondo ($w \models \varphi$, $w \not\models \varphi$), oppure è sfruttata la $R$ relazione per accedere ad un mondo adiacente ($wRw'$), passo necessario per proseguire la costruzione nel caso di formule del tipo $\Box \psi, \Diamond \psi$.
+
+Un ramo è \textbf{chiuso} se contiene la contraddizione$w \models \varphi$ e $w \not \models \varphi$ (analogamente: $w \models \varphi, w \models \lnot \varphi$), altrimenti è detto \textbf{aperto}. Se tutti i rami sono chiusi, il tableaux è detto chiuso.
+
+La logica modale è \textbf{decidibile} (dunque la costruzione del tableaux termina in un numero finito di iterazioni).
+
+\subsection{Regole di espansione per operatori proposizionali}
+Sono del tutto analoghe alle classiche $\alpha$ e $\beta$ rules (\textit{alpha equivalence} e \textit{branch splitting}).
+
+
+\begin{tabular*}{\textwidth}{c @{\extracolsep{\fill}} c}
+$\alpha$ rules & $\lnot \lnot$ elimination \\
+\\
+%alpha rules
+\begin{tabular}{c c c}
+\begin{tabular}{c}
+$w \models \phi \land \psi$ \\
+\hline
+$w \models \phi$ \\
+$w \models \psi$ \\
+\end{tabular} &
+\begin{tabular}{c}
+$w \not \models \phi \lor \psi$ \\
+\hline
+$w \not \models \phi$ \\
+$w \not \models \psi$ \\
+\end{tabular} &
+\begin{tabular}{c}
+$w \not \models \phi \supset \psi$ \\
+\hline
+$w \models \phi$ \\
+$w \not \models \psi$ \\
+\end{tabular}
+\end{tabular} &
+%lnot lnot elimination
+\begin{tabular}{c}
+$w \not \models \lnot \phi$ \\
+\hline
+$w \models \phi$
+\end{tabular}\\
+\\
+$\beta$ rules & Branch closure \\
+%beta rules
+\begin{tabular}{c c c}
+\begin{tabular}{c}
+$w \models \phi \lor \psi$ \\
+\hline
+$w \models \phi$ \vline \hspace{1mm} $w \models \psi$ 
+\end{tabular} &
+\begin{tabular}{c}
+$w \not \models \phi \land \psi$ \\
+\hline
+$w \not \models \phi$ \vline \hspace{1mm} $w \not \models \psi$ 
+\end{tabular} &
+\begin{tabular}{c}
+$w \models \phi \supset \psi$ \\
+\hline
+$w \not \models \phi$ \vline \hspace{1mm} $w \models \psi$ 
+\end{tabular}
+\end{tabular} &
+%branch closure
+\begin{tabular}{c}
+$w \models \phi$\\
+$w \not \models \phi$\\
+\hline
+$\mathrm{X}$
+\end{tabular}\\
+\\
+\end{tabular*}
+
+\subsection{Regole di espansione per operatori modali}
+\begin{tabular*}{\textwidth}{c @{\extracolsep{\fill}} c}
+$\gamma$ rules & $\delta$ rules\\
+\begin{tabular}{c c}
+%gamma rules
+\begin{tabular}{c}
+$w \models \Box \varphi$ \\
+\hline
+$wRw'$\\
+$w' \models \varphi$
+\end{tabular} &
+\begin{tabular}{c}
+$w' \not \models \Diamond \varphi$ \\
+\hline
+$wRw'$\\
+$w' \not \models \varphi$
+\end{tabular}
+\end{tabular} &
+\begin{tabular}{c c}
+%delta rules
+\begin{tabular}{c}
+$w \not \models \Box \varphi$ \\
+\hline
+$wRw'$\\
+$w' \not \models \varphi$
+\end{tabular} &
+\begin{tabular}{c}
+$w \models \Diamond \varphi$ \\
+\hline
+$wRw'$ \\
+$w' \models \varphi$
+\end{tabular}
+\end{tabular}\\
+\\
+\end{tabular*}
+
+\begin{enumerate}
+\item Nelle $\gamma$ rules, $w'$ rappresenta un qualsiasi mondo, anche già presente nel tableaux.
+\item Nelle $\delta$ rules, $w'$ rappresenta un nuovo mondo non presente nel tableaux.
+\end{enumerate}

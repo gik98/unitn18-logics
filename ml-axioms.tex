@@ -1,0 +1,73 @@
+\chapter{ML - Sistemi di logica modale}
+
+Diversi sistemi di logica modale possono essere costruiti a seconda di quali assunzioni sono valide per la relazione di accessibilità $R$. Il significato di porre determinate assunzioni su $R$ dipende dalla modalità che è necessario rappresentare.
+
+Si supponga, ad esempio, una logica temporale, in cui $uRv$ ha il significato di "$u$ avviene prima di $v$". È sensato richiedere che una relazione su questo sistema sia \textbf{transitiva} ($uRv, vRw \to uRw$), al tempo stesso, una relazione su questo sistema difficilmente deve essere \textbf{simmetrica} ($uRv \to vRu$).
+
+\subsection{Assiomi della logica modale normale}
+
+In aggiunta agli assiomi di Hilbert sulla logica proposizionale, la logica modale introduce l'assioma di distribuzione (\textbf{K}) e la regola di necessità (\textit{necessitation rule} - \textbf{Nec}).
+
+\textbf{Nec}: sia $\varphi$ una tautologia, allora $\Box \varphi$ è vero.
+
+\textbf{K}: $\Box (\varphi \supset \psi) \supset (\Box \varphi \supset \Box \psi)$
+\\
+
+\textbf{Esempio} (Nec): Sia $\varphi \coloneqq (p \lor \lnot p)$; $\varphi$ è una tautologia, e per \textbf{Nec} è vero anche $\Box \varphi, \Box \Box \varphi, \dots$
+
+\textbf{Osservazione} (Nec): la \textit{necessitation rule} non può essere scritta come $\varphi \supset \Box \varphi$; questa affermazione non è necessariamente vera! $\varphi$ deve essere una formula valida per gli assiomi.
+
+Per tutte le logiche modali normali (per tutti i frame di Kripke) valgono gli assiomi di Hilbert della logica proposizionale, \textbf{K} e \textbf{Nec}.
+
+
+\subsection{Altri possibili assiomi della logica modale}
+
+\textbf{Assioma T (riflessività):} se un frame $F = \langle W, R \rangle$ è riflessivo, allora vale $$\Box \varphi \supset \varphi$$
+
+Analogamente, se $F$ è riflessivo, vale $\forall w \in W | wRw$.
+\\
+%\textit{Dimostrazione (correttezza)}: sia $w \in W$, R è una relazione riflessiva (vale $wRw \forall w$). Si supponga $M, w \models \Box \varphi$; siccome $R$ è relaz. di accessibilità riflessiva è necessario che $M, w \models \varphi$. Dunque, $M. w \models \Box \varphi \to \varphi$.
+%\textit{Dimostrazione (completezza):}
+
+\textbf{Assioma B (simmetricità):} se un frame $F = \langle W, R \rangle$ è simmetrico, allora vale $$\varphi \supset \Box \Diamond \varphi$$
+
+Analogamente, se $F$ è simmetrico, vale la seguente proprietà sulla relazione $R$: $\forall v, w \in W | vRw \supset wRv$
+\\
+
+\textbf{Assioma D (serialità):} se un frame $F$ è seriale, allora vale $$\Box \varphi \supset \Diamond \varphi$$
+
+Analogamente, se $F$ è seriale, vale $\forall w \in W \exists u \in W | wRu$
+\\
+
+\textbf{Assioma 4 (transitività):} se un frame $F$ è transitivo, allora vale $$\Box \varphi \supset \Box \Box \varphi$$
+
+Analogamente, se $F$ è transitivo, vale $\forall u, v, w \in W  | (uRv \land vRw) \supset uRw$
+\\
+
+\textbf{Assioma 5 (euclideicità):} se un frame $F$ è euclideo, allora vale $$\Diamond \varphi \supset \Box \Diamond \varphi$$
+
+Analogamente, se $F$ è euclideo, vale $\forall u, v, w \in W  | (uRv \land uRw) \supset vRw$
+\\
+
+\subsection{Categorie di sistemi logici modali}
+
+I sistemi logici sono categorizzati a seconda di quali assiomi valgono:
+\\
+
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabularx}{\textwidth}{|c c X|}
+\hline
+Classe & Assiomi validi & Descrizione\\
+\hline
+\textbf{K} & &La classe di tutti i frame di Kripke\\
+\textbf{K4} & 4 &La classe di tutti i frame di Kripke transitivi\\
+\textbf{KT} & T &La classe di tutti i frame di Kripke riflessivi\\
+\textbf{KB} & B &La classe di tutti i frame di Kripke simmetrici\\
+\textbf{KD} & D &La classe di tutti i frame di Kripke seriali\\
+\textbf{S4} & 4, T &La classe di tutti i frame di Kripke riflessivi e transitivi\\
+\textbf{S5} & 5, T &La classe di tutti i frame di Kripke con $R$ relazione di equivalenza\\
+\textbf{S5} & 4, T, B &Caratterizzazione equivalente di S5\footnote{Per esercizio, si può dimostrare con il tableaux FOL: $\models \lbrace 4, B \rbrace \equiv \lbrace 5 \rbrace$} \\
+\hline
+\end{tabularx}
+\egroup

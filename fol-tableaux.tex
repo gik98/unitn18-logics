@@ -93,13 +93,13 @@ $\varphi(c)$
 \end{tabular*}
 
 \begin{enumerate}
-\item Nelle $\gamma$ rules, $t$ rappresenta una qualunque costante, anche già presente nella formula.
-\item Nelle $\delta$ rules, $c$ rappresenta una \textit{nuova costante}, non presente nella formula.
+\item Nelle $\gamma$ rules, $t$ rappresenta una qualunque costante, anche già presente nel tableaux.
+\item Nelle $\delta$ rules, $c$ rappresenta una \textit{nuova costante}, non presente nel tableaux.
 \end{enumerate}
 
 Perché funziona? Spiegazione:
 \begin{enumerate}
-\item $\forall x . \varphi(x)$ significa che $\varphi$ deve essere soddisfatta per ogni elemento del dominio di interpretazione $\Delta$. Una \textit{costante} $t$ è un elemento del dominio $\Delta$. Pertanto, $\forall x. \varphi(x) \supset \varphi[x/t]$.\\\textit{È lecito (e può essere necessario) applicare più volte una $\gamma$ rule}, utilizzando costanti diverse: l'applicazione rimane valida infatti per ogni costante del dominio.
+\item $\forall x . \varphi(x)$ significa che $\varphi$ deve essere soddisfatta per ogni elemento del dominio di interpretazione $\Delta$. Una \textit{costante} $t$ è un elemento del dominio $\Delta$. Pertanto, $\forall x. \varphi(x) \supset \varphi[x/t]$.\\\textit{È lecito applicare più volte una $\gamma$ rule}, utilizzando costanti diverse: l'applicazione rimane valida infatti per ogni costante del dominio. \textit{Può essere necessario applicare più volte una $\gamma$ rule}, ad esempio, per cercare due branch closure su due rami diversi, con due variabili diverse in conflitto (e che condividono come ancestor un quantificatore universale).
 \item $\exists x. \varphi(x)$ è equivalente a $\exists c \in \Delta | \varphi(c)$, dunque $\exists x. \varphi(x)$ è soddisfacibile sse $\varphi(c)$ è soddisfacibile.\\È importante che ogni $\delta$ rule introduca una nuova costante: riutilizzare la stessa nello sviluppo di esistenziali diversi modificherebbe la formula di partenza; imporrebbe infatti che \textit{lo stesso} elemento del dominio $\Delta$ verifichi \textit{ogni} esistenziale!
 \end{enumerate}
 
@@ -111,6 +111,8 @@ Se il \textit{tableaux} è applicato ad una formula FOL $\varphi$, e questa form
 Se, però, il \textit{tableaux} è applicato ad una formula \textbf{soddisfacibile}, la sua costruzione \textbf{può terminare} in un numero finito di passi e lasciare qualche ramo aperto, \textbf{oppure non terminare}.
 
 Un \textit{tableaux} nel quale compare un \textit{ramo aperto saturato} sicuramente non può terminare. Nulla può dirsi in altri casi.
+
+\textbf{Osservazione:} in quali condizioni un \textit{tableaux} in FOL può non essere decidibile? Nel caso in cui la formula contenga un quantificatore universale e il dominio di interpretazione sia infinito. La $\gamma$ rule può essere applicata una volta per ogni costante del dominio (quindi un numero infinito di volte, dato il dominio infinito). Questa condizione è necessaria affinché si produca un tableaux infinito, ma non sufficiente: potrebbe comunque essere possibile applicare la branch closure ad ogni ramo aperto.
 
 \subsection{Open saturated branch}
 Un \textit{ramo aperto saturato} (open saturated branch) è un ramo nel quale ogni elemento che non sia un \textit{literal} è stato analizzato almeno una volta e, inoltre, in cui ogni $\gamma$ rule è stata applicata con ogni possibile \textit{term} presente sul ramo.

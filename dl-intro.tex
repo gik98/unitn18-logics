@@ -1,0 +1,138 @@
+\chapter{DL - Introduzione}
+
+La logica descrittiva è una famiglia di formalismi che permettono una rappresentazione della conoscenza in un dominio - mondo (\textit{Knowledge Base}). DL prevede prima la definizione della \textbf{terminologia} rilevanti del dominio (classi di oggetti e gerarchia fra queste); questi concetti sono poi impiegati per specificare proprietà sugli \textbf{oggetti} che compongono il dominio (la "descrizione" del "mondo").
+
+Obiettivo della DL è rispondere a task di ragionamento sulla struttura della terminologia (p.es.: il termine - la classe $Canary$ è una specializzazione di $Bird$?) oppure sugli oggetti che compongono il mondo (p.es.: l'oggetto $foo$ gode della proprietà - è membro della classe $Canary$?).
+
+\subsection{Knowledge Base}
+
+In DL, la Knowledge Base è composta dall'insieme della \textit{terminologia} e della \textit{descrizione} del mondo. Queste due componenti sono chiamate \textbf{TBox} e \textbf{ABox}.
+\begin{enumerate}
+\item Il \textbf{TBox} è l'insieme della \textit{terminologia}, il "vocabolario" della KB. Il vocabolario consiste di \textit{atomic concepts}, che denotano classi di oggetti, e \textit{roles}, che denotano relazioni fra \textit{concepts}. Ulteriori \textit{concepts} derivati possono essere composti combinando \textit{atomic roles}; equivalentemente per le \textit{roles}.
+\item La \textbf{ABox} introduce \textit{oggetti} del mondo, assegnando loro un \textit{nome} e effettuando \textit{asserzioni} su essi; le asserzioni sono espresse nella terminologia della TBox.
+\end{enumerate}
+
+\subsection{Attributive Concept Language with Complements}
+$\mathscr{ALC}$ (Attributive Concept Language with Complements) è un linguaggio di description logics. La descrizione del mondo in $\mathscr{ALC}$ comprende \textit{concept atomici} e \textit{roles atomici} (proprietà che descrivono i concepts); descrizioni complesse possono essere ottenute componento descrizioni atomiche secondo le regole sintatiche.
+
+\begin{fdefinition}[Linguaggio $\mathscr{ALC}$]
+I \textit{concepts} sono composti secondo le seguenti regole sintattiche.
+
+\textbf{Concept atomici:}
+\begin{enumerate}
+\item $A$ un concept atomico \\ Esempio: $Person$
+\item $\top$ il concept universale
+\item $\bot$ l'opposto del concept universale
+\item $\lnot A$ la negazione di un concept atomico
+\end{enumerate}
+\textbf{Proposizioni (concept complessi, well formed formulas):}
+\begin{enumerate}
+\item $F \coloneqq C \sqcap D$ l'intersezione fra due concept \\ Esempio: $Woman \coloneqq Person \sqcap Female$
+\item $F \coloneqq C \sqcup D$ l'unione di due concept \\ Esempio: $Parent \coloneqq Father \sqcup Mother$
+\item $F \coloneqq \forall R. C$ la restrizione universale di un concept ad un role \\ Esempio: $F \coloneqq Person \sqcap \forall hasChild. Female$ (F descrive le persone che hanno tutte le figlie femmina)\\ Esempio: $G \coloneqq Person \sqcap \forall hasChild.\bot$ (G descrive tutte le persone che non hanno figli)
+\item $F \coloneqq \exists R. C$ la restrizione esistenziale di un concept rispetto ad un role \\ Esempio: $Parent \coloneqq Person \sqcap \exists hasChild.\top$ (Parent sono le persone che hanno (almeno) un figlio) \\ Esempio: $F \coloneqq Person \sqcap hasChild. Female$ (F descrive le persone che hanno (almeno) una figlia femmina)
+\end{enumerate}
+\end{fdefinition}
+
+\subsection{Interpretazione in ALC}
+Sia $\mathcal{A}$ l'insieme di tutti gli \textit{atomic concepts}, sia $\mathcal{R}$ l'insieme di tutti gli \textit{atomic roles}, sia $\mathcal{N}$ l'insieme dei nomi degli oggetti\footnote{I nomi sono discussi in seguito, nella descrizione della \textit{ABox}}; l'interpretazione è una coppia $\langle \Delta_I, I \rangle$ composta di:
+\begin{enumerate}
+\item un dominio di interpretazione $\Delta_I$;
+\item una funzione di interpretazione $I: \mathcal{A} \mapsto A_I \subseteq \Delta_I$ (mappa \textit{atomic concepts} in elementi del dominio), $I: \mathcal{R} \mapsto R_I \subseteq \Delta_I \times \Delta_I$ (mappa \textit{atomic roles} in coppie di elementi del dominio - una relazione binaria sul dominio), $I: \mathcal{N} \mapsto \Delta_I$ (mappa \textit{nomi} di oggetti in elementi del dominio)\footnote{Ibid.}.
+\end{enumerate}
+
+L'interpretazione si estende anche a concetti composti secondo le seguenti regole:
+\begin{enumerate}
+\item $I(\top) = \Delta_I$ (l'interpretazione del concept universale è l'intero dominio di interpretazione)
+\item $I(\bot) = \emptyset$ (analogamente a sopra)
+\item $I(\lnot A) = \Delta_I \\ I(A)$ (l'interpretazione di $\lnot A$ è complementare a quella di $A$)
+\item $I(C \sqcap D) = I(C) \cap I(D)$
+\item $I(C \sqcup D) = I(C) \cup I(D)$
+\item $I(\forall R. C) = \lbrace a \in \Delta_I | \forall b. \langle a, b \rangle \in \mathcal{R} \to b \in I(C) \rbrace$ (gli elementi del dominio di interpretazione tali che, qualsiasi altro elemento con cui essi sono in $R$-relazione, questo è in $I(C)$)
+\item $I(\exists R. C) = \lbrace a \in \Delta_I | \exists b. \langle a, b \rangle \in \mathcal{R} \to b \in I(C) \rbrace$ (gli elementi del dominio di interpretazione tali che esiste almeno un elemento con cui essi sono in $R$-relazione ed è in $I(C)$)
+\end{enumerate}
+
+\subsection{Asserzioni terminologiche e TBox}
+Due \textit{concept} $C, D$ sono detti \textbf{equivalenti}, e si scrive $C \equiv D$, sse per ogni interpretazione $I$ vale $I(C) = I(D)$
+
+\textbf{Esempio}\footnote{La dimostrazione è immediata e segue dalle regole sintattiche di $\mathscr{ALC}$ descritte prima}: $\forall hasChild. Female \sqcap \forall hasChild. Student \equiv \forall hasChild . (Female \sqcap Student)$
+\\
+
+Un \textit{concept} $C$ è \textbf{incluso}\footnote{Un sinonimo per "è incluso" è "è sussunto da" (is subsumed by)} da un \textit{concept} $D$ ($C$ è più specifico di $D$), e si scrive $C \sqsubseteq D$, sse per ogni interpretazione $I$ vale $I(C) \subseteq I(D)$.
+
+\textbf{Esempio:} $\forall hasChild. Female \sqsubseteq Female$ 
+
+\textbf{Osservazione:} Se $C \sqsubseteq D$ e $D \sqsubseteq C$, allora $C \equiv D$.
+\\
+
+Una \textbf{definizione} è un'\textit{equivalenza} il cui membro sinistro è un \textit{atomic concept}.
+
+\textbf{Esempio:} $Woman \equiv Person \sqcap Female$
+\\
+
+Una \textbf{specializzazione} è un'\textit{inclusione} il cui membro sinistro è un \textit{atomic concept}.
+
+\textbf{Esempio:} $Student \sqsubseteq Person$
+\\
+
+La \textbf{terminologia} o \textbf{TBox} è un insieme di asserzioni terminologiche, cioé \textit{definizioni} e \textit{specializzazioni}. Queste asserzioni pongono dei vincoli (constraints) su tutti i possibili modelli del mondo.
+
+\subsection{Task di ragionamento su TBox}
+
+Un \textit{concept} $P$ \textbf{è soddisfacibile} rispetto ad una \textit{TBox} $T$ se esiste un'interpretazione $I$ tale che $\forall \vartheta \in T | I \models \vartheta$ (I deve soddisfare i constraints posti dal \textit{TBox}) e $I \models P$, cioé $I(P) \neq \emptyset$.
+
+Se $P$ è soddisfacibile, allora $I$ è detta \textit{modello} di $P$.
+\\
+
+Date due concept $P, Q$ e una \textit{TBox} $T$, si possono descrivere i seguenti task di ragionamento:
+\begin{enumerate}
+\item Soddisfacibilità rispetto a $T$: $T \models P$?
+\item Sussunzione: $T \models P \sqsubseteq Q$, oppure $T \models Q \sqsubseteq P$?
+\item Equivalenza: $T \models P \sqsubseteq Q$ e $T \models Q \sqsubseteq P$?
+\item Disgiuntività: $T \models P \sqcap Q \sqsubseteq \bot$?
+\end{enumerate}
+
+\textbf{Osservazione}: sussunzione, equivalenza e disgiuntività di due \textit{concept} dipendono esclusivamente dalla \textit{TBox} (non dipendono dall'interpretazione), mentre ha senso parlare di un'interpretazione che soddisfa un \textit{concept}.
+
+\subsection{Sintassi e semantica di ABox}
+La \textit{ABox} contiene la descrizione del mondo, si introducono infatti \textbf{nomi} per gli oggetti del mondo e si asserisce l'appartenenza di \textit{nomi} a \textit{concept}.
+\\
+
+Una \textit{concept assertion} è del tipo : $Student(paul)$, da leggersi "$paul$ appartiene a $Student$", in cui $Student$ è un \textit{concept} e $paul$ un \textit{nome}.
+\\
+
+\textbf{Unique Name Assumption}: Si assume che \textit{nomi} diversi denotino oggetti diversi.
+\\
+
+\textbf{TBox Set Constructor}: È lecito definire un \textit{concept}, detto \textbf{nominal}, nella \textit{TBox} elencando i \textit{nomi} che lo compongono. Esempio: $Student \equiv \lbrace John, Mary, Paul \rbrace$
+
+\subsection{Task di ragionamento su ABox}
+Data una \textit{ABox} $A$ si possono descrivere i seguenti task di ragionamento rispetto a una \textit{TBox} $T$:
+\begin{enumerate}
+\item Consistenza o soddisfacibilità: $A$ è consistente rispetto a $T$ se esiste un'interpretazione $I$ che è modello sia per $T$ sia per $A$;
+\item Instance checking: verificare se un nome $a$ è contenuto dal (è instanza del) \textit{concept} $C$ ($A \models C(a)$ sse ogni interpretazione che soddisfa $A$ soddisfa anche $C(a)$);
+\item Instance retrieval: dato un \textit{concept} $C$, ricavare tutte le sue istanze (tutti i \textit{nomi} contenuti in $C$);
+\item Concept realization: dato un insieme di \textit{concepts} $\mathcal{C}$ e un \textit{nome} $a$, ricavare il \textit{concept} $C$ più specifico (rispetto all'ordinamento per inclusione $\sqsubseteq$) per cui $a$ è istanza di $C$ ($A \models C(a)$).
+\end{enumerate}
+
+\textbf{Ragionamento per espansione}: è una tecnica per svolgere i task di ragionamento da compiere su una \textit{ABox} $A$ rispetto ad una \textit{TBox} $T$ aciclica (che non contiene definizioni ciclice). L'\textbf{espansione} di $A$ rispetto a $T$ è una \textit{ABox} $A'$ che contiene tutte le affermazioni di $A$ e, in più, ciascuna affermazione $C(a)$ di $A$ è ripetuta su tutti i \textit{concept} $D$ tali per cui $C \sqsubseteq D$.
+
+\textbf{Esempio}: se la \textit{TBox} è definita $T = \lbrace C \equiv D \sqcap E \rbrace$ e la \textit{ABox} è definita $A = \lbrace C(a) \rbrace$, l'espansione di $A$ rispetto a $T$ è la \textit{ABox} $A' = \lbrace C(a); D(a); E(a) \rbrace$.
+\\
+
+La \textit{ABox} $A$ è \textbf{consistente}\footnote{Rispetto a \textbf{nessuna} \textit{TBox}, o rispetto ad una \textit{TBox} vuota} sse la sua espansione $A'$ è non contiene contraddizioni.
+
+La \textit{ABox} $A$ è \textbf{consistente} rispetto ad una \textit{TBox} $T$ sse lo è la sua espansione $A'$, nel modo definito prima (esiste $I$ modello sia per $A$ sia per $T$).
+
+$A \models C(a)$ (\textbf{instance checking}) sse $A \cup \lbrace \lnot C(a) \rbrace$ non è consistente.
+
+\textbf{Instance retrieval} e \textbf{Concept realization} possono essere ricavati direttamente scorrendo tutte le affermazioni della \textit{ABox} espansa.
+\\
+
+I sistemi di ragionamento della DL possono assumere un \textbf{mondo aperto} (\textbf{O}pen \textbf{W}orld \textbf{A}ssumption) o un \textbf{mondo chiuso} (\textbf{C}losed \textbf{W}orld \textbf{A}ssumption):
+\begin{enumerate}
+\item assumere un mondo chiuso significa che ciò che non è esplicitamente asserito è falso;
+\item assumere un mondo aperto significa che ciò che non è esplicitamente asserito è sconosciuto (né vero, né falso).
+\end{enumerate}
+
+\textbf{Esempio:} sia $T = \lbrace C \equiv A \sqcap B \rbrace; A = \lbrace A(p)$, è vero $C(q)$? Assumendo OWA: nulla può dirsi; assumendo CWA: no.
