@@ -29,23 +29,30 @@ I \textit{concepts} sono composti secondo le seguenti regole sintattiche.
 \begin{enumerate}
 \item $F \coloneqq C \sqcap D$ l'intersezione fra due concept \\ Esempio: $Woman \coloneqq Person \sqcap Female$
 \item $F \coloneqq C \sqcup D$ l'unione di due concept \\ Esempio: $Parent \coloneqq Father \sqcup Mother$
-\item $F \coloneqq \forall R. C$ la restrizione universale di un concept ad un role \\ Esempio: $F \coloneqq Person \sqcap \forall hasChild. Female$ (F descrive le persone che hanno tutte le figlie femmina)\\ Esempio: $G \coloneqq Person \sqcap \forall hasChild.\bot$ (G descrive tutte le persone che non hanno figli)
+\item $F \coloneqq \forall R. C$ la restrizione universale di un concept ad un role \\ Esempio: $F \coloneqq Person \sqcap \forall hasChild. Female$ (F descrive le persone che hanno tutte le figlie femmina - \textbf{comprese quelle che non hanno figli in generale})\\ Esempio: $G \coloneqq Person \sqcap \forall hasChild.\bot$ (G descrive tutte le persone che non hanno figli)
 \item $F \coloneqq \exists R. C$ la restrizione esistenziale di un concept rispetto ad un role \\ Esempio: $Parent \coloneqq Person \sqcap \exists hasChild.\top$ (Parent sono le persone che hanno (almeno) un figlio) \\ Esempio: $F \coloneqq Person \sqcap hasChild. Female$ (F descrive le persone che hanno (almeno) una figlia femmina)
 \end{enumerate}
 \end{fdefinition}
+
+Un altro linguaggio di description logic è $\mathscr{ClassL}$; può essere visto come una restrizione di $\mathscr{ALC}$ ai soli operatori della logica proposizionale (non comprende $\forall$ e $\exists$).
 
 \subsection{Interpretazione in ALC}
 Sia $\mathcal{A}$ l'insieme di tutti gli \textit{atomic concepts}, sia $\mathcal{R}$ l'insieme di tutti gli \textit{atomic roles}, sia $\mathcal{N}$ l'insieme dei nomi degli oggetti\footnote{I nomi sono discussi in seguito, nella descrizione della \textit{ABox}}; l'interpretazione è una coppia $\langle \Delta_I, I \rangle$ composta di:
 \begin{enumerate}
 \item un dominio di interpretazione $\Delta_I$;
-\item una funzione di interpretazione $I: \mathcal{A} \mapsto A_I \subseteq \Delta_I$ (mappa \textit{atomic concepts} in elementi del dominio), $I: \mathcal{R} \mapsto R_I \subseteq \Delta_I \times \Delta_I$ (mappa \textit{atomic roles} in coppie di elementi del dominio - una relazione binaria sul dominio), $I: \mathcal{N} \mapsto \Delta_I$ (mappa \textit{nomi} di oggetti in elementi del dominio)\footnote{Ibid.}.
+\item una funzione di interpretazione $I$: 
+\begin{enumerate}
+\item $I: I(a \in \mathcal{A}) \to A_I \subseteq \Delta_I$ (mappa \textit{atomic concepts} in un sottoinsieme di elementi del dominio),
+\item $I: I(r \in \mathcal{R}) \to R_I \subseteq \Delta_I \times \Delta_I$ (mappa \textit{atomic roles} in un sottoinsieme di coppie di elementi del dominio - una relazione binaria sul dominio),
+\item $I: I(n \in \mathcal{N}) \to d \in \Delta_I$ (mappa \textit{nomi} di oggetti in elementi del dominio)\footnote{Ibid.}.
+\end{enumerate}
 \end{enumerate}
 
 L'interpretazione si estende anche a concetti composti secondo le seguenti regole:
 \begin{enumerate}
 \item $I(\top) = \Delta_I$ (l'interpretazione del concept universale è l'intero dominio di interpretazione)
 \item $I(\bot) = \emptyset$ (analogamente a sopra)
-\item $I(\lnot A) = \Delta_I \\ I(A)$ (l'interpretazione di $\lnot A$ è complementare a quella di $A$)
+\item $I(\lnot A) = \Delta_I \setminus I(A)$ (l'interpretazione di $\lnot A$ è complementare a quella di $A$)
 \item $I(C \sqcap D) = I(C) \cap I(D)$
 \item $I(C \sqcup D) = I(C) \cup I(D)$
 \item $I(\forall R. C) = \lbrace a \in \Delta_I | \forall b. \langle a, b \rangle \in \mathcal{R} \to b \in I(C) \rbrace$ (gli elementi del dominio di interpretazione tali che, qualsiasi altro elemento con cui essi sono in $R$-relazione, questo è in $I(C)$)
@@ -73,6 +80,8 @@ Una \textbf{definizione} è un'\textit{equivalenza} il cui membro sinistro è un
 Una \textbf{specializzazione} è un'\textit{inclusione} il cui membro sinistro è un \textit{atomic concept}.
 
 \textbf{Esempio:} $Student \sqsubseteq Person$
+
+\textbf{Esempio:} $Father \sqsubseteq \forall hasChild. Person$
 \\
 
 La \textbf{terminologia} o \textbf{TBox} è un insieme di asserzioni terminologiche, cioé \textit{definizioni} e \textit{specializzazioni}. Queste asserzioni pongono dei vincoli (constraints) su tutti i possibili modelli del mondo.
@@ -84,7 +93,7 @@ Un \textit{concept} $P$ \textbf{è soddisfacibile} rispetto ad una \textit{TBox}
 Se $P$ è soddisfacibile, allora $I$ è detta \textit{modello} di $P$.
 \\
 
-Date due concept $P, Q$ e una \textit{TBox} $T$, si possono descrivere i seguenti task di ragionamento:
+Dati due \textit{concept} $P, Q$ e una \textit{TBox} $T$, si possono descrivere i seguenti task di ragionamento:
 \begin{enumerate}
 \item Soddisfacibilità rispetto a $T$: $T \models P$?
 \item Sussunzione: $T \models P \sqsubseteq Q$, oppure $T \models Q \sqsubseteq P$?
@@ -95,10 +104,12 @@ Date due concept $P, Q$ e una \textit{TBox} $T$, si possono descrivere i seguent
 \textbf{Osservazione}: sussunzione, equivalenza e disgiuntività di due \textit{concept} dipendono esclusivamente dalla \textit{TBox} (non dipendono dall'interpretazione), mentre ha senso parlare di un'interpretazione che soddisfa un \textit{concept}.
 
 \subsection{Sintassi e semantica di ABox}
-La \textit{ABox} contiene la descrizione del mondo, si introducono infatti \textbf{nomi} per gli oggetti del mondo e si asserisce l'appartenenza di \textit{nomi} a \textit{concept}.
+La \textit{ABox} contiene la descrizione del mondo, si introducono infatti \textbf{nomi} per gli oggetti del mondo e si asserisce l'appartenenza di \textit{nomi} a \textit{concept} e a \textit{roles}
 \\
 
-Una \textit{concept assertion} è del tipo : $Student(paul)$, da leggersi "$paul$ appartiene a $Student$", in cui $Student$ è un \textit{concept} e $paul$ un \textit{nome}.
+Una \textbf{concept assertion} è del tipo : $Student(paul)$, da leggersi "$paul$ appartiene a $Student$", in cui $Student$ è un \textit{concept} e $paul$ un \textit{nome}.
+
+Una \textbf{role assertion} è del tipo: $fatherOf(john, julia)$, in cui $fatherOf$ è una relazione binaria (\textit{role}); $john$, $julia$ dei \textit{nomi}.
 \\
 
 \textbf{Unique Name Assumption}: Si assume che \textit{nomi} diversi denotino oggetti diversi.
