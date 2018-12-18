@@ -19,35 +19,89 @@ In aggiunta agli assiomi di Hilbert sulla logica proposizionale, la logica modal
 
 Per tutte le logiche modali normali (per tutti i frame di Kripke) valgono gli assiomi di Hilbert della logica proposizionale, \textbf{K} e \textbf{Nec}.
 
-
 \subsection{Altri possibili assiomi della logica modale}
 
-\textbf{Assioma T (riflessività):} se un frame $F = \langle W, R \rangle$ è riflessivo, allora vale $$\Box \varphi \supset \varphi$$
+\subsubsection{Assioma T (riflessività):} Se un frame $F = \langle W, R \rangle$ è riflessivo, allora vale $$\Box \varphi \supset \varphi$$
 
 Analogamente, se $F$ è riflessivo, vale $\forall w \in W | wRw$.
-\\
-%\textit{Dimostrazione (correttezza)}: sia $w \in W$, R è una relazione riflessiva (vale $wRw \forall w$). Si supponga $M, w \models \Box \varphi$; siccome $R$ è relaz. di accessibilità riflessiva è necessario che $M, w \models \varphi$. Dunque, $M. w \models \Box \varphi \to \varphi$.
-%\textit{Dimostrazione (completezza):}
 
-\textbf{Assioma B (simmetricità):} se un frame $F = \langle W, R \rangle$ è simmetrico, allora vale $$\varphi \supset \Box \Diamond \varphi$$
+\subsubsection{Dimostrazione(correttezza)}
+\textit{Dimostrare la correttezza(soundness) dell'assioma significa dimostrare che, dato un frame riflessivo, allora l'assioma T, così come è espresso con gli operatori della logica modale è necessariamente valido. In altre parole, dato un frame riflessivo, se vale la premessa $\Box \varphi$, allora deve valere la conclusione $\varphi$}
+
+Sia $F = \langle W, R \rangle$ un frame di Kripke riflessivo, sia $w \in W$ un qualsiasi mondo del frame.\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia $(M, w) \models \Box \varphi$.\\
+Si osserva che $wRw$ (il frame è riflessivo). Allora se $(M, w) \models \Box \varphi$, è necessariamente vero $(M, w) \models \varphi$.
+
+\subsubsection{Dimostrazione(completezza)}
+\textit{Dimostrare la completezza(completeness) dell'assioma significa dimostrare che, dato un frame non riflessivo, allora l'assioma T, così come è espresso con gli operatori della logica modale non è necessariamente valido. In altre parole, dato un frame non riflessivo in cui vale la premessa, la conclusione può non valere.}
+
+Sia $F = \langle W, R \rangle$ un frame di Kripke non riflessivo. Dunque, esiste $w \in W$ tale per cui $w\cancel{R}w$.\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia $I(\varphi) = W \setminus \{w\}$ ($\varphi$ è vero ovunque nel modello tranne che nel mondo $w$).\\
+Siccome $w$ non può accedere a sé stesso (l'unico mondo in cui $I(\varphi) = \bot$), vale $(M, w) \models \Box \varphi$, e vale anche $(M, w) \not \models \varphi$. Dunque, $F \not \models \Box \varphi \supset \varphi$.
+\\
+
+\subsubsection{Assioma B (simmetricità):} Se un frame $F = \langle W, R \rangle$ è simmetrico, allora vale $$\varphi \supset \Box \Diamond \varphi$$
 
 Analogamente, se $F$ è simmetrico, vale la seguente proprietà sulla relazione $R$: $\forall v, w \in W | vRw \supset wRv$
-\\
 
-\textbf{Assioma D (serialità):} se un frame $F$ è seriale, allora vale $$\Box \varphi \supset \Diamond \varphi$$
+\subsubsection{Dimostrazione (correttezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke simmetrico, sia $w \in W$ un qualsiasi mondo del frame. \\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia vera la premessa $(M, w) \models \varphi$. Per ogni mondo $w' | wRw'$, vale anche $w'Rw$ (il frame è simmetrico), dunque $\forall w' | wRw', (M, w') \models \Diamond \varphi$. Allora, $(M, w) \models \Box \Diamond \varphi$.\\
+Dunque, $(M, w) \models \varphi \supset \Box \Diamond \varphi$.
+
+\subsubsection{Dimostrazione (completezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke non simmetrico, dunque esistono $w, w' \in W$ tale per cui $wRw'$ ma $w'\cancel{R}w$.\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia $I(\varphi) = \{w\}$ ($\varphi$ è vero solo in $w$). Dunque, è vera la premessa $(M, w) \models \varphi$.\\
+Vale $(M, w') \not \models \Diamond \varphi$, dato che $w'\cancel{R}w$; pertanto vale $(M, w) \not \models \Box \Diamond \varphi$.
+Dunque, $(M, w) \not \models \varphi \supset \Box \Diamond \varphi$.
+
+\subsubsection{Assioma D (serialità):} Se un frame $F$ è seriale, allora vale $$\Box \varphi \supset \Diamond \varphi$$
 
 Analogamente, se $F$ è seriale, vale $\forall w \in W \exists u \in W | wRu$
-\\
 
-\textbf{Assioma 4 (transitività):} se un frame $F$ è transitivo, allora vale $$\Box \varphi \supset \Box \Box \varphi$$
+\subsubsection{Dimostrazione (correttezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke seriale, sia $w \in W$ un qualsiasi mondo del frame. Osservo che, dato $F$ seriale, allora $\exists w' \in W | wRw'$\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia la premessa $(M, w) \models \Box \varphi$ vera. Dato che $wRw'$, è necessario che $(M, w') \models \varphi$.\\
+Dunque, $(M, w) \models \Diamond \varphi$. Allora $F \models \Box \varphi \supset \Diamond \varphi$
+
+\subsubsection{Dimostrazione (completezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke non seriale, dunque esiste $w \in W$ tale per cui $\not \exists w' \in W | wRw'$ (w non è connesso a nessun altro mondo).\\
+Per qualsiasi modello vale $w \models \Box \varphi$ e $w \not \models \Diamond \varphi$.\\
+Dunque, $F \not \models \Box \varphi \supset \Diamond \varphi$.
+
+\subsubsection{Assioma 4 (transitività):} Se un frame $F$ è transitivo, allora vale $$\Box \varphi \supset \Box \Box \varphi$$
 
 Analogamente, se $F$ è transitivo, vale $\forall u, v, w \in W  | (uRv \land vRw) \supset uRw$
-\\
 
-\textbf{Assioma 5 (euclideicità):} se un frame $F$ è euclideo, allora vale $$\Diamond \varphi \supset \Box \Diamond \varphi$$
+\subsubsection{Dimostrazione(correttezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke transitivo, siano $w, w' \in W$ due mondi del frame tali per cui $wRw'$.\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia la premessa $(M, w) \models \Box \varphi$ vera. Dato $wRw'$ allora $(M, w) \models \varphi$.\\
+Vale: $(M, w') \models \Box \varphi$ (1) è vero sse per ogni mondo $w''$ tale che $w'Rw''$ vale $(M, w'') \models \varphi$ (2). Ma (2) è vero: dato che $F$ è transitivo, osservo che $wRw''$; vale $(M, w) \models \box \varphi$, dunque $(M, w'') \models \varphi$. Allora $(M, w') \models \Box \varphi$ e $(M, w) \models \Box \Box \varphi$.\\
+Dunque, $F \models \Box \varphi \supset \Box \Box \varphi$.
+
+\subsubsection{Dimostrazione(completezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke non transitivo, dunque esistono $w, w', w'' \in W$ tali per cui $wRw', w'Rw'', w\cancel{R}w''$.\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia $I(\varphi) = W \setminus \{w''\}$ ($\varphi$ è sempre vero, tranne in $w''$).\\
+Vale la premessa, dunque $(M, w) \models \Box \varphi$, che implica $(M, w') \models \varphi$.\\
+Vale $(M, w'') \not \models \varphi$ per come è definita l'interpretazione, quindi $(M, w') \not \models \Box \varphi$, e allora $(M, w) \not \models \Box \Box \varphi$.\\
+Dunque, $F \not \models \Box \varphi \supset \Box \Box \varphi$.
+
+\subsubsection{Assioma 5 (euclideicità):} Se un frame $F$ è euclideo, allora vale $$\Diamond \varphi \supset \Box \Diamond \varphi$$
 
 Analogamente, se $F$ è euclideo, vale $\forall u, v, w \in W  | (uRv \land uRw) \supset vRw$
-\\
+
+\subsubsection{Dimostrazione(correttezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke euclideo, sia $w \in W$.\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, supponiamo valga la premessa $(M, w) \models \Diamond \varphi$, allora esiste un mondo $w' \in W$ tale che $wRw'$ e $(M, w') \models \varphi$.\\
+Ora, per qualsiasi altro mondo $w''$ tale che $wRw''$, per euclideicità vale anche $w''Rw'$, allora $(M, w'') \models \Diamond \varphi$. Quindi, se in qualunque mondo $w''$ vale $(M, w'') \models \Diamond \varphi$, allora vale $(M, w) \models \Box \Diamond \varphi$.\\
+Dunque, $F \models \Diamond \varphi \supset \Box \Diamond \varphi$.
+
+\subsubsection{Dimostrazione(completezza):}
+Sia $F = \langle W, R \rangle$ un frame di Kripke non euclideo, dunque esistono $w, w', w'' \in W$ tali per cui $wRw', wRw'', w'\cancel{R}w''$.\\
+Sia $M = \langle F, I \rangle$ un modello per il frame di Kripke di cui sopra, sia $I(\varphi) = \{w''\}$ ($\varphi$ è vero solo in $w''$).\\
+Vale $(M, w'') \models \varphi$ e $(M, w) \models \Diamond \varphi$; vale anche però $(M, w') \not \models \Diamond \varphi$, perché $w'\cancel{R}w''$ e non ci sono altri mondi in cui $\varphi$ è vero. Pertanto, $(M, w) \not \models \Box \Diamond \varphi$.\\
+Dunque, $F \not \models \Diamond \varphi \supset \Box \Diamond \varphi$.
+
 
 \subsection{Categorie di sistemi logici modali}
 
