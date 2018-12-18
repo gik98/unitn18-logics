@@ -55,8 +55,8 @@ L'interpretazione si estende anche a concetti composti secondo le seguenti regol
 \item $I(\lnot A) = \Delta_I \setminus I(A)$ (l'interpretazione di $\lnot A$ è complementare a quella di $A$)
 \item $I(C \sqcap D) = I(C) \cap I(D)$
 \item $I(C \sqcup D) = I(C) \cup I(D)$
-\item $I(\forall R. C) = \lbrace a \in \Delta_I | \forall b. \langle a, b \rangle \in \mathcal{R} \to b \in I(C) \rbrace$ (gli elementi del dominio di interpretazione tali che, qualsiasi altro elemento con cui essi sono in $R$-relazione, questo è in $I(C)$)
-\item $I(\exists R. C) = \lbrace a \in \Delta_I | \exists b. \langle a, b \rangle \in \mathcal{R} \to b \in I(C) \rbrace$ (gli elementi del dominio di interpretazione tali che esiste almeno un elemento con cui essi sono in $R$-relazione ed è in $I(C)$)
+\item $I(\forall R. C) = \lbrace a \in \Delta_I | \forall b. \langle a, b \rangle \in I(R) \to b \in I(C) \rbrace$ (gli elementi del dominio di interpretazione tali che, qualsiasi altro elemento con cui essi sono in $R$-relazione, questo è in $I(C)$)
+\item $I(\exists R. C) = \lbrace a \in \Delta_I | \exists b. \langle a, b \rangle \in I(R) \to b \in I(C) \rbrace$ (gli elementi del dominio di interpretazione tali che esiste almeno un elemento con cui essi sono in $R$-relazione ed è in $I(C)$)
 \end{enumerate}
 
 \subsection{Asserzioni terminologiche e TBox}
